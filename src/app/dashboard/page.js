@@ -125,7 +125,7 @@ export default function Dashboard() {
 
         <div className="grid grid-cols-2 pb-[20px]">
             <div className="text-[14px]">
-                <div className="pt-[20px] text-[#777E86] font-bold pb-[10px]">Today's Tasks:</div>
+                <div className="pt-[20px] text-[#777E86] font-bold pb-[10px]">Today&apos;s Tasks:</div>
                 <div className="pb-[10px]"><span className="text-[#777E86]">To sign:</span> <a href="#" className="text-[#3265E2] underline">Zephyr & Virgin Galactic</a> <a className="text-[#3265E2] underline" href="#">Virgin</a></div>
                 <div className="pb-[10px]"><span className="text-[#777E86]">To sign:</span> <a className="text-[#3265E2] underline" href="#">Zephyr & Virgin Galactic</a> <a className="text-[#3265E2] underline" href="#">Virgin</a></div>
             </div>

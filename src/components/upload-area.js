@@ -27,9 +27,9 @@ export default function UploadArea({ onUpload }) {
         onUpload(null)
     }
 
-    useEffect(() => {
-        handleReset();
-    }, [])
+    // useEffect(() => {
+    //     handleReset();
+    // }, [])
 
     return (
             <>

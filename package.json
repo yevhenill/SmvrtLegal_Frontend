@@ -4,11 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next export",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "next export"
   },
   "dependencies": {
+    "@ant-design/icons": "5.2.5",
+    "@ant-design/pro-components": "2.6.12",
+    "@ant-design/pro-layout": "^7.16.8",
     "@ckeditor/ckeditor5-build-classic": "^38.0.1",
     "@ckeditor/ckeditor5-build-decoupled-document": "^38.1.0",
     "@ckeditor/ckeditor5-editor-decoupled": "^38.1.0",
@@ -20,7 +24,7 @@
     "eslint-config-next": "13.4.1",
     "jquery": "^3.7.0",
     "moment": "^2.29.4",
-    "next": "13.4.1",
+    "next": "^13.4.14-canary.1",
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-calendar": "^4.2.1",

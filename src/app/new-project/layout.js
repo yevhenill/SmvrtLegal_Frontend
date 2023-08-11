@@ -18,26 +18,22 @@ import ServerSuccess from "@/popups/server-success";
 export default function NewProjectLayout({ children }) {
   const { push } = useRouter();
 
+  const [final, setFinal] = useState(false);
   const [steps, setSteps] = useState([
     {
       label: "Add project details",
       slug: "",
     },
-    {
-      label: "Team & Collaborators",
-      slug: "step-2",
-    },
     // {
-    //     // label: 'Approvals & Signatures',
-    //     label: 'Signatures',
-    //     slug: 'step-3'
+    //   label: "Team & Collaborators",
+    //   slug: "step-2",
     // },
     {
       label: "Upload Document",
       slug: "step-3",
     },
     {
-      label: "Analyzing",
+      label: "Edit Document",
       slug: "step-4",
     },
   ]);
@@ -92,6 +88,7 @@ export default function NewProjectLayout({ children }) {
     const currentIndex = steps.findIndex((item) => item.slug == activeStep);
     const targetStep = steps[currentIndex - 1];
     setActiveStep(targetStep.slug);
+    if (final) { setFinal(false) }
     if (currentIndex - 1 != 0) {
       push("/new-project/step-" + currentIndex);
     } else {
@@ -117,14 +114,21 @@ export default function NewProjectLayout({ children }) {
     if (status) {
       const currentIndex = steps.findIndex((item) => item.slug == activeStep);
       const targetStep = steps[currentIndex + 1];
-      if (targetStep == steps[steps.length - 1]) {
+
+      if (final) {
         handleCreateProject();
+      }
+
+      if (targetStep == steps[steps.length - 1]) {
+        push("/new-project/edit-document");
+        setFinal(true)
         return;
       }
 
       if (currentIndex != steps.length - 1) {
         setActiveStep(targetStep.slug);
-        push("/new-project/step-" + (currentIndex + 2));
+
+        push("/new-project/step-" + (currentIndex + 3));
       }
     }
   };
@@ -143,13 +147,13 @@ export default function NewProjectLayout({ children }) {
       }
     }
 
-    if (activeStep == steps[1].slug) {
-      // const existLead = !! Object.values(project.leads).filter(value => value).length
-      // return existLead
-    }
+    // if (activeStep == steps[1].slug) {
+    //   // const existLead = !! Object.values(project.leads).filter(value => value).length
+    //   // return existLead
+    // }
 
-    if (activeStep == steps[3].slug) {
-      if (!project.documentname || !project.document) {
+    if (activeStep == steps[1].slug) {
+      if (!project.documentname || !project.type || !project.category) {
         return false;
       }
     }
@@ -175,7 +179,8 @@ export default function NewProjectLayout({ children }) {
     });
 
     setActiveStep("step-4");
-    push("/new-project/step-4");
+    push("/active-projects");
+
 
     let promise = new Promise(async (resolve, reject) => {
       const fd = new FormData();
@@ -365,7 +370,7 @@ export default function NewProjectLayout({ children }) {
 
   return (
     <DashboardLayout>
-      <div className="lg:pl-[270px] pl-0 pt-[90px] pr-[15px] relative pb-[100px]">
+      <div className="lg:pl-[270px] pl-0 pt-[150px] pr-[15px] relative pb-[100px]">
         <Card className="max-w-[800px] mx-auto">
           <Stepper steps={steps} active={activeStep} onChange={onChangeActiveStep} />
 

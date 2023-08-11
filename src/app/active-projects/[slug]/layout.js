@@ -13,6 +13,7 @@ import { Divider } from 'antd';
 import Progress from "@/components/project-progress";
 import FullViewDescription from "@/components/full-view";
 import $ from 'jquery';
+import Sidebar from './sidebar'
 
 export default function ProjectDetailsLayout({ children }) {
   const { push } = useRouter();
@@ -236,7 +237,7 @@ export default function ProjectDetailsLayout({ children }) {
 
   return (
     <DashboardLayout>
-      <div className="lg:pl-[270px] pl-0 pt-[90px] pr-[15px]">
+      <div className="lg:pl-[270px] pl-0 pt-[90px]">
         {/* header */}
         <div className="text-[24px] text-[#212936] Eina03 font-bold flex">
           <a href="#"
@@ -252,38 +253,24 @@ export default function ProjectDetailsLayout({ children }) {
         </div>
         {/* end header */}
 
-        <Divider />
-
-        <div className="grid grid-cols-3 grid-flow-col gap-4">
-          <div className="col-span-2 bg-white p-[20px] rounded-[6px]">
-            <FullViewDescription
-              content={project?.document?.content}
-              onClick={handleClickDescription}
-              spanId={spanId}
-            />
+        <div className="flex" style={{ borderTop: '1px solid #d7d7d7e0' }}>
+          <div className="grid grid-cols-3 grid-flow-col gap-4 mr-[10px] pt-[20px] pr-[10px]">
+            <div className="col-span-2 bg-white p-[20px] rounded-[6px]">
+              <FullViewDescription
+                content={project?.document?.content}
+                onClick={handleClickDescription}
+                spanId={spanId}
+              />
+            </div>
+            <div className="bg-white p-[20px] rounded-[6px]">
+              <div className="text-[16px] text-[#8792A8] font-bold">Description</div>
+              <div id="description"></div>
+            </div>
           </div>
-          <div className="bg-white p-[20px] rounded-[6px]">
-            <div className="text-[16px] text-[#8792A8] font-bold">Description</div>
-            <div id="description"></div>
+          <div className="w-[100px] p-[20px]" style={{ borderLeft: '1px solid #d7d7d7e0' }}>
+            <Sidebar />
           </div>
         </div>
-
-        {/* <ProjectDetailsHeader
-          project={project}
-          steps={steps}
-          activeStep={activeStep} W
-          roles={roles}
-        />
-
-        <ProjectContext.Provider value={{ project, roles, setProject }}>
-          <Tabs
-            tabs={tabs}
-            active={activeTab}
-            className="mb-8"
-            change={handleChangeTab}
-          />
-          {children}
-        </ProjectContext.Provider> */}
       </div>
     </DashboardLayout>
   );
