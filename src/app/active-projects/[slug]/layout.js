@@ -137,7 +137,7 @@ export default function ProjectDetailsLayout({ children }) {
     var results = ''
     $('#description').html('');
     const API_URL = "https://api.openai.com/v1/chat/completions";
-    const API_KEY = "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";
+    const API_KEY = "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";
     let controller = null; // Store the AbortController instance
 
     controller = new AbortController();
@@ -150,7 +150,7 @@ export default function ProjectDetailsLayout({ children }) {
           Authorization: `Bearer ${API_KEY}`,
         },
         body: JSON.stringify({
-          model: "gpt-4",
+          model: "gpt-3.5-turbo",
           messages: [{
             role: "user",
             // content: `Write a concise and easy-to-understand summary of the given contract that distills its content, focusing on making it accessible for a 5th grader. The summary should include the structure of the document. As an AI, follow these steps to generate the best results:

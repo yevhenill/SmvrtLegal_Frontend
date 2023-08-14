@@ -80,7 +80,6 @@ export default function ActiveProject() {
 
     return (
         <div className="lg:pl-[270px] pl-0 pt-[90px] pr-[15px]">
-            <Alert className="mt-[10px] mb-[12px]" message="Hang tight! Our SUPER smart AI is making confusing and complex legal language easy to understand. We'll be done in X minutes" type="warning" showIcon closable />
             <Table
                 fields={fields}
                 data={projects}

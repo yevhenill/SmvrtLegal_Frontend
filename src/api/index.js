@@ -220,6 +220,16 @@ export function get_document_types() {
   }).then((data) => data.json());
 }
 
+export function get_document_count() {
+  return request(API_ENDPOINT + "/api/document/getdocumentcount", {
+    method: "GET",
+    headers: {
+      ...headers,
+      authorization: `Bearer ${getToken()}`,
+    },
+  }).then((data) => data.json());
+}
+
 export function remove_member_from_team(data) {
   return request(API_ENDPOINT + "/api/team/" + data.team_id + "/member/remove", {
     method: "DELETE",

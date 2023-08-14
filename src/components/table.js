@@ -8,14 +8,14 @@ export default function Table({ fields, data = [], onClickRow }) {
 	}
 
 	return (
-		<div className="w-full font-Eina03 table-auto overflow-hidden rounded-t-[6px]" style={{borderRadius: '12px'}}>
+		<div className="w-full font-Eina03 table-auto overflow-hidden rounded-t-[6px] pb-[20px]" style={{borderRadius: '12px'}}>
 			<table className="w-full">
 				<thead className="">
 					<tr className="bg-[#fff] text-[#889CC4] text-white text-[14px] font-bold p-[16px] font-bold border-b">
 						{
 							fields.map((field, index) => {
 								return (
-									<th className="p-[16px] text-left cursor-pointer" key={index}>{field.label}</th>
+									<th className="p-[16px] text-left cursor-pointer text-[#889CC4]" key={index}>{field.label}</th>
 								);
 							})
 						}

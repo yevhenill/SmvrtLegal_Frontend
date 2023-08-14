@@ -14,6 +14,7 @@ import * as api from "@/api";
 
 import ServerError from "@/popups/server-error";
 import ServerSuccess from "@/popups/server-success";
+import Link from "next/link"
 
 export default function NewProjectLayout({ children }) {
   const { push } = useRouter();
@@ -75,7 +76,7 @@ export default function NewProjectLayout({ children }) {
     save_for_future: false,
   });
 
-  const [activeStep, setActiveStep] = useState("step-1");
+  const [activeStep, setActiveStep] = useState("");
 
   const [aiSummaryData, setAiSummaryData] = useState([]);
 
@@ -115,19 +116,26 @@ export default function NewProjectLayout({ children }) {
       const currentIndex = steps.findIndex((item) => item.slug == activeStep);
       const targetStep = steps[currentIndex + 1];
 
-      if (final) {
+      // if (final) {
+      //   push("/active-projects");
+      //   handleCreateProject();
+      // }
+
+      if (activeStep == 'step-3') {
+        push("/active-projects");
         handleCreateProject();
       }
 
+
+      setFinal(false)
       if (targetStep == steps[steps.length - 1]) {
-        push("/new-project/edit-document");
         setFinal(true)
+        push("/new-project/edit-document");
         return;
       }
 
       if (currentIndex != steps.length - 1) {
         setActiveStep(targetStep.slug);
-
         push("/new-project/step-" + (currentIndex + 3));
       }
     }
@@ -153,34 +161,23 @@ export default function NewProjectLayout({ children }) {
     // }
 
     if (activeStep == steps[1].slug) {
-      if (!project.documentname || !project.type || !project.category) {
-        return false;
-      }
+      // if (!project.documentname || !project.type || !project.category) {
+      //   return false;
+      // }
     }
 
     return true;
   };
 
   const handleCreateProject = async () => {
-    // setPopup({
-    //   ...popup,
-    //   server_success: {
-    //     title: "Wait",
-    //     visible: true,
-    //     message: "We're Analyzing Your Document, Hang Tight ...",
-    //   },
-    // });
-
     message.open({
       key: "analyzing",
       type: "loading",
-      content: "We're Analyzing Your Document, Hang Tight ...",
+      content: "Our super smart AI is simplifying your document! Hang Tight...we'll be done within a minute.",
       duration: 0,
     });
 
     setActiveStep("step-4");
-    push("/active-projects");
-
 
     let promise = new Promise(async (resolve, reject) => {
       const fd = new FormData();
@@ -329,8 +326,6 @@ export default function NewProjectLayout({ children }) {
 
           fd.set("save_for_future", project.save_for_future ? 1 : 0);
 
-          console.log(111111, project.leads);
-
           api.create_project(fd).then((data) => {
             const errors = data.errors ? Object.values(data.errors) : [];
             if (errors.length || data.exception) {
@@ -352,6 +347,15 @@ export default function NewProjectLayout({ children }) {
 
     await promise.then(() => {
       message.destroy("analyzing");
+      push("/active-projects");
+
+      message.open({
+        type: 'success',
+        content: (
+          <span dangerouslySetInnerHTML={{ __html: `Your document is ready! <a style="color: #4096ff;" href="/active-projects">Click here</a> to view.` }} />
+        ),
+        duration: 1000 * 1000,
+      });
     });
   };
 
@@ -371,7 +375,7 @@ export default function NewProjectLayout({ children }) {
   return (
     <DashboardLayout>
       <div className="lg:pl-[270px] pl-0 pt-[150px] pr-[15px] relative pb-[100px]">
-        <Card className="max-w-[800px] mx-auto">
+        <Card className={`${final ? 'w-[100%]' : 'max-w-[800px]'} mx-auto`}>
           <Stepper steps={steps} active={activeStep} onChange={onChangeActiveStep} />
 
           <NewProjectContext.Provider value={{ project, setProject, handleNext }}>
@@ -379,7 +383,7 @@ export default function NewProjectLayout({ children }) {
           </NewProjectContext.Provider>
         </Card>
         <div className="fixed bottom-0 z-[2] left-0 right-0 border-t p-[15px] bg-[#fff] lg:pl-[270px] pl-0 ">
-          <div className="mx-auto max-w-[800px] flex items-center justify-between">
+          <div className={`mx-auto max-w-[800px] flex items-center justify-between`}>
             <Button
               {...{ disabled: !isCanPrev() }}
               onClick={handlePrev}

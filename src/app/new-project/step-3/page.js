@@ -25,6 +25,7 @@ export default function StepThree() {
     const [showCategoryInfo, setCategoryPopup] = useState(false);
     const [categories, setCategories] = useState([])
     const [uploadType, setUploadType] = useState(0)
+    const [documentCount, setDocumentCount] = useState(0);
 
     const [popups, setPopups] = useState({
         upload_document: false,
@@ -145,40 +146,45 @@ export default function StepThree() {
             }
         })
 
-        api.get_categories().then(({ data }) => {
-            data = data || []
-
-            setCategories([
-                {
-                    label: 'Select category',
-                    value: '',
-                },
-                ...data.map((item) => {
-                    return {
-                        label: item.name,
-                        value: item.id,
-                    }
-                })
-            ]);
+        api.get_document_count().then(({ data }) => {
+            console.log(data)
+            setDocumentCount(data);
         })
 
-        api.get_document_types().then(({ data }) => {
-            setTypes([
-                {
-                    label: 'Select type',
-                    value: '',
-                },
-                ...data.map((item) => {
-                    return {
-                        label: item.name,
-                        value: item.id,
-                    }
-                })
-            ])
-        })
+        // api.get_categories().then(({ data }) => {
+        //     data = data || []
+        //     console.log(data)
+        //     setCategories([
+        //         {
+        //             label: 'Select category',
+        //             value: '',
+        //         },
+        //         ...data.map((item) => {
+        //             return {
+        //                 label: item.name,
+        //                 value: item.id,
+        //             }
+        //         })
+        //     ]);
+        // })
+
+        // api.get_document_types().then(({ data }) => {
+        //     setTypes([
+        //         {
+        //             label: 'Select type',
+        //             value: '',
+        //         },
+        //         ...data.map((item) => {
+        //             return {
+        //                 label: item.name,
+        //                 value: item.id,
+        //             }
+        //         })
+        //     ])
+        // })
     }, [])
 
-    const style1 = uploadType == 0 ? 'grid grid-cols-2 gap-4' : '';
+    const style1 = (documentCount > 0 && uploadType !== 1) == 0 ? '' : 'grid grid-cols-2 gap-4';
 
     return (
         <div>
@@ -187,9 +193,8 @@ export default function StepThree() {
 
             <div>
                 <div className={`mb-[15px] ${style1}`}>
-                    {console.log('uploadtype', project)}
-                    {(uploadType == 0 || uploadType == 1) && <UploadArea onUpload={handleUpload} />}
-                    {(uploadType == 0 || uploadType == 2) &&
+                    <UploadArea onUpload={handleUpload} />
+                    {(documentCount > 0 && uploadType !== 1) &&
                         <div className='flex flex-col items-center justify-center font-Eina03 text-[16px] border-dashed border border-[#E5E5E5] rounded-[6px] font-bold bg-[#F6FAFF] py-[20px] text-center'>
                             <svg className="mb-[18px]" width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M19.9287 8.28564H9.643C8.69622 8.28564 7.92871 9.05316 7.92871 9.99993V25.4285C7.92871 26.3753 8.69622 27.1428 9.643 27.1428H19.9287C20.8755 27.1428 21.643 26.3753 21.643 25.4285V9.99993C21.643 9.05316 20.8755 8.28564 19.9287 8.28564Z" stroke="#4ECFE0" strokeWidth="1.71429" strokeLinecap="round" strokeLinejoin="round" />
@@ -255,9 +260,9 @@ export default function StepThree() {
                             <div className='grid gap-[16px] grid-cols-[1fr]'>
                                 <SearchDocumentProperty
                                     value={project.type}
-                                    type="document type"
+                                    type="type"
                                     // onInput={(value) => setForm({ ...form, type: value })}
-                                    onInput={(value) => setProject({ ...project, type: event.target.value })}
+                                    onInput={(value) => setProject({ ...project, type: value })}
                                     placeholder="NDA, MSA, SOW"
                                 />
                             </div>
@@ -275,12 +280,12 @@ export default function StepThree() {
                                 placeholder="My Documents, Business, Music, Sales, etc."
                                 type="category"
                                 // onInput={(value) => setForm({ ...form, category: value })}
-                                onInput={(value) => setProject({ ...project, category: event.target.value })}
+                                onInput={(value) => setProject({ ...project, category: value })}
                             />
                         </div>
                     </div>
 
-                    <Button disabled={!project.document} onClick={handleEditDocument} className={`${!project.document ? 'bg-[#B8C2CC]' : 'bg-[#1860CC]'} text-white w-full text-[14px]`} label={isEditor() ? 'Edit document' : 'View document'} />
+                    {/* <Button disabled={!project.document} onClick={handleEditDocument} className={`${!project.document ? 'bg-[#B8C2CC]' : 'bg-[#1860CC]'} text-white w-full text-[14px]`} label={isEditor() ? 'Edit document' : 'View document'} /> */}
 
                     <Prompt
                         open={popup.prompt.visible}
