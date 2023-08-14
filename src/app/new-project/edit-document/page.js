@@ -2,11 +2,10 @@
 
 import CKeditor from "@/components/ckeditor";
 import { useNewProject } from "@/context/new-project";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import * as api from "@/api";
 
 export default function StepFour() {
-  const editorRef = useRef();
   const [editorLoaded, setEditorLoaded] = useState(false);
   const [data, setData] = useState("");
 
@@ -14,14 +13,6 @@ export default function StepFour() {
 
   useEffect(() => {
     readFile();
-    if (editorRef.current) {
-      const editor = editorRef.current.editor;
-
-      editor.model.document.on('change:data', () => {
-        const value = editor.getData();
-        console.log(value); // or do something with the value
-      });
-    }
   }, []);
 
   const readFile = () => {
@@ -57,7 +48,6 @@ export default function StepFour() {
         }}
         value={data}
         editorLoaded={editorLoaded}
-        ref={editorRef}
       />
     </div>
   );

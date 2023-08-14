@@ -361,13 +361,13 @@ export default function NewProjectLayout({ children }) {
 
   useEffect(() => {
     const segments = location.pathname.split("/");
+    segments.pop();
     const step = segments.pop();
 
     if (["new-project"].includes(step)) {
       setActiveStep("");
     }
-
-    if (["step-2", "step-3", "step-4"].includes(step)) {
+    if (["step-3", "step-4"].includes(step)) {
       setActiveStep(step);
     }
   }, []);

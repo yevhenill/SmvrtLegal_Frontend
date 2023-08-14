@@ -14,7 +14,6 @@ import SearchDocumentProperty from '@/components/search-document-property.js';
 import CategoryInfo from '../../../popups/category-info';
 
 
-
 export default function StepThree() {
     const { push } = useRouter();
 

@@ -4,7 +4,7 @@ export default function Stepper({ steps, active, onChange }) {
             onChange(step);
         }
     }
-
+    
     const activeIndex = steps.findIndex((curr) => curr.slug === active) + 1
     const procentageProgress = (100 / steps.length);
     const completedSteps = steps.slice(0, activeIndex - 1).map(step => step.slug);
