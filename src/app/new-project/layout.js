@@ -66,6 +66,7 @@ export default function NewProjectLayout({ children }) {
     signatories: [],
     documentname: "",
     document: null,
+    docContent: null,
     type: "",
     category: "",
     approvers: [],
@@ -116,15 +117,15 @@ export default function NewProjectLayout({ children }) {
       const currentIndex = steps.findIndex((item) => item.slug == activeStep);
       const targetStep = steps[currentIndex + 1];
 
-      // if (final) {
-      //   push("/active-projects");
-      //   handleCreateProject();
-      // }
-
-      if (activeStep == 'step-3') {
+      if (final) {
         push("/active-projects");
         handleCreateProject();
       }
+
+      // if (activeStep == 'step-3') {
+      //   push("/active-projects");
+      //   handleCreateProject();
+      // }
 
 
       setFinal(false)
@@ -181,7 +182,10 @@ export default function NewProjectLayout({ children }) {
 
     let promise = new Promise(async (resolve, reject) => {
       const fd = new FormData();
-      fd.append("file", project.document);
+      fd.append("document", project.document);
+      fd.append("documentname", project.documentname);
+      fd.append("docContent", project.docContent);
+
 
       let content = await api.convert_file_to_html(fd).then((data) => {
         return new Promise((resolve, reject) => resolve(data.data));

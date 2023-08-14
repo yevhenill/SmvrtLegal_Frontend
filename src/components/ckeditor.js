@@ -30,8 +30,16 @@ export default function CKeditor({ onChange, editorLoaded, name, value }) {
                 .then( editor => {
                     const toolbarContainer = window.document.querySelector( '.document-editor__toolbar' );
                     toolbarContainer.appendChild( editor.ui.view.toolbar.element );
-                    setEditor(editor)
-                    editor.setData(value)
+                    editor.setData(value);
+                    
+                    // Add onChange event listener
+                    editor.model.document.on('change:data', () => {
+                      const updatedValue = editor.getData();
+                      // Call your custom onChange function here
+                      onChange(updatedValue);
+                    });
+
+                    setEditor(editor);
                 } )
                 .catch( err => {
                     console.error( err );

@@ -98,12 +98,12 @@ export default function StepThree() {
     }
 
     const handleUpload = (upload) => {
+        console.log(upload);
         setProject({
             ...project,
             document: upload,
             documentname: upload ? upload.name.split(".")[0] : '',
         });
-
         setPopups({
             ...popups,
             upload_document: false
