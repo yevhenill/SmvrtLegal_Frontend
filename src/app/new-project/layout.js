@@ -16,6 +16,7 @@ import ServerError from "@/popups/server-error";
 import ServerSuccess from "@/popups/server-success";
 import Link from "next/link"
 
+
 export default function NewProjectLayout({ children }) {
   const { push } = useRouter();
 
@@ -246,7 +247,13 @@ export default function NewProjectLayout({ children }) {
 
         plainTexts = [...plainTexts, ...tempPlainTexts];
       }
-
+      message.destroy("analyzing");
+      message.open({
+        key: "analyzing",
+        type: "loading",
+        content: "Our super smart AI is simplifying your document! Hang Tight...we'll be done within a minute.(50%)",
+        duration: 0,
+      });
       console.log("PLAN", plainTexts);
       console.log("STRIP", strippedTexts);
 
@@ -275,7 +282,13 @@ export default function NewProjectLayout({ children }) {
             );
           });
       }
-
+      message.destroy("analyzing");
+      message.open({
+        key: "analyzing",
+        type: "loading",
+        content: "Our super smart AI is simplifying your document! Hang Tight...we'll be done within a minute.  (75%)",
+        duration: 0,
+      });
       await api
         .openAI_summarize_document({
           content: "Agreement Document",
@@ -359,7 +372,7 @@ export default function NewProjectLayout({ children }) {
         content: (
           <span dangerouslySetInnerHTML={{ __html: `Your document is ready! <a style="color: #4096ff;" href="/active-projects">Click here</a> to view.` }} />
         ),
-        duration: 1000 * 1000,
+        duration: 100 * 1000,
       });
     });
   };
