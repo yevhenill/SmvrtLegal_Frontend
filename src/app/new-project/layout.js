@@ -187,10 +187,11 @@ export default function NewProjectLayout({ children }) {
       fd.append("docContent", project.docContent);
 
 
-      let content = await api.convert_file_to_html(fd).then((data) => {
-        return new Promise((resolve, reject) => resolve(data.data));
-      });
+      // let content = await api.convert_file_to_html(fd).then((data) => {
+      //   return new Promise((resolve, reject) => resolve(data.data));
+      // });
 
+      let content = project.docContent;
       let plainText = content;
       const tempElement = document.createElement("div");
       const bodyStart = plainText.indexOf("<body");
@@ -270,7 +271,7 @@ export default function NewProjectLayout({ children }) {
             }
             summaryHtml = summaryHtml.replace(
               new RegExp(escapeRegExp(old), "g"),
-              data?.data?.choices.map((res) => res.text).join("")
+              data?.data?.choices?.map((res) => res.text).join("")
             );
           });
       }
@@ -280,7 +281,7 @@ export default function NewProjectLayout({ children }) {
           content: "Agreement Document",
         })
         .then((data) => {
-          project.ai_summary = data?.data?.choices.map((item) => item.text).join("");
+          project.ai_summary = data?.data?.choices?.map((item) => item.text).join("");
           project.content = content;
           project.summaryhtml = summaryHtml;
 
@@ -295,7 +296,7 @@ export default function NewProjectLayout({ children }) {
 
           console.log("total", project);
 
-          const fd = new FormData();
+        //  const fd = new FormData();
           for (let key in project) {
             fd.append(key, project[key]);
           }
