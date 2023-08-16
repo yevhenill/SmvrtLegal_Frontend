@@ -36,7 +36,7 @@ export default function NewProjectLayout({ children }) {
     },
     {
       label: "Edit Document",
-      slug: "step-4",
+      slug: "edit-document",
     },
   ]);
 
@@ -89,19 +89,19 @@ export default function NewProjectLayout({ children }) {
 
   const handlePrev = () => {
     const currentIndex = steps.findIndex((item) => item.slug == activeStep);
-    const targetStep = steps[currentIndex - 1];
-    setActiveStep(targetStep.slug);
-    if (final) { setFinal(false) }
-    if (currentIndex - 1 != 0) {
-      push("/new-project/step-" + currentIndex);
-    } else {
-      push("/new-project");
-    }
+    if(currentIndex > 0){
+      const targetStep = steps[currentIndex - 1];
+      if (final) { 
+        setFinal(false) 
+      }
+      onChangeActiveStep(targetStep);
+    }    
   };
 
   const handleNext = () => {
     // Check if the "role" value is null for any member
     let status = true;
+    /*// [COMMENTED-YH-1]
     for (let i = 0; i < project.members.length; i++) {
       if (project.members[i].role.value === null || project.members[i].role.value === "") {
         setPopup({
@@ -113,9 +113,21 @@ export default function NewProjectLayout({ children }) {
         });
         status = false;
       }
-    }
+    } */
     if (status) {
+      if(activeStep == steps[0].slug){
+        setActiveStep(steps[1].slug);
+        push("/new-project/"+steps[1].slug);
+      }else if (activeStep == steps[1].slug){
+        setActiveStep(steps[2].slug);
+        push("/new-project/"+steps[2].slug);
+      }else if(activeStep == steps[2].slug){
+        handleCreateProject();
+        push("/active-projects");
+      }
+    /*// [COMMENTED-YH-1]
       const currentIndex = steps.findIndex((item) => item.slug == activeStep);
+      
       const targetStep = steps[currentIndex + 1];
 
       if (final) {
@@ -128,7 +140,6 @@ export default function NewProjectLayout({ children }) {
       //   handleCreateProject();
       // }
 
-
       setFinal(false)
       if (targetStep == steps[steps.length - 1]) {
         setFinal(true)
@@ -139,7 +150,7 @@ export default function NewProjectLayout({ children }) {
       if (currentIndex != steps.length - 1) {
         setActiveStep(targetStep.slug);
         push("/new-project/step-" + (currentIndex + 3));
-      }
+      }*/
     }
   };
 
@@ -151,23 +162,17 @@ export default function NewProjectLayout({ children }) {
   };
 
   const isCanNext = () => {
-    if (activeStep == steps[0].slug) {
+    if(activeStep == steps[0].slug){
       if (!project.name || !project.duedate) {
         return false;
       }
+    }else if (activeStep == steps[1].slug){
+      if (!project.documentname || !project.type || !project.category) {
+        return false;
+      }
+    }else if(activeStep == steps[2].slug){
+
     }
-
-    // if (activeStep == steps[1].slug) {
-    //   // const existLead = !! Object.values(project.leads).filter(value => value).length
-    //   // return existLead
-    // }
-
-    if (activeStep == steps[1].slug) {
-      // if (!project.documentname || !project.type || !project.category) {
-      //   return false;
-      // }
-    }
-
     return true;
   };
 
@@ -178,8 +183,6 @@ export default function NewProjectLayout({ children }) {
       content: "Our super smart AI is simplifying your document! Hang Tight...we'll be done within a minute.",
       duration: 0,
     });
-
-    setActiveStep("step-4");
 
     let promise = new Promise(async (resolve, reject) => {
       const fd = new FormData();
@@ -254,7 +257,7 @@ export default function NewProjectLayout({ children }) {
       message.open({
         key: "analyzing",
         type: "loading",
-        content: "Our super smart AI is simplifying your document! Hang Tight...we'll be done within a minute. (50%)",
+        content: "Our super smart AI is simplifying your document! Hang Tight...we'll be done within a minute. (25%)",
         duration: 0,
       });
       
@@ -287,7 +290,7 @@ export default function NewProjectLayout({ children }) {
       message.open({
         key: "analyzing",
         type: "loading",
-        content: "Our super smart AI is simplifying your document! Hang Tight...we'll be done within a minute. (75%)",
+        content: "Our super smart AI is simplifying your document! Hang Tight...we'll be done within a minute. (50%)",
         duration: 0,
       });
       await api
@@ -367,7 +370,7 @@ export default function NewProjectLayout({ children }) {
     message.open({
       key: "analyzing",
       type: "loading",
-      content: "Our super smart AI is simplifying your document! Hang Tight...we'll be done within a minute. (100%)",
+      content: "Our super smart AI is simplifying your document! Hang Tight...we'll be done within a minute. (75%)",
       duration: 0,
     });
     await promise.then(() => {
@@ -392,7 +395,7 @@ export default function NewProjectLayout({ children }) {
     if (["new-project"].includes(step)) {
       setActiveStep("");
     }
-    if (["step-3", "step-4"].includes(step)) {
+    if (["step-3", "edit-document"].includes(step)) {
       setActiveStep(step);
     }
   }, []);
@@ -419,7 +422,7 @@ export default function NewProjectLayout({ children }) {
             <Button
               {...{ disabled: !isCanNext() }}
               onClick={handleNext}
-              label="Save and Continue"
+              label={(activeStep==steps[2].slug)?"Save & Go to Active Project":"Save and Continue"}
               className="bg-[#1860CC] !text-white font-bold !w-auto text-[14px] px-[20px]"
             />
           </div>

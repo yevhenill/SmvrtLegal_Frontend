@@ -24,6 +24,7 @@ export default function StepThree() {
     const [showCategoryInfo, setCategoryPopup] = useState(false);
     const [categories, setCategories] = useState([])
     const [uploadType, setUploadType] = useState(0);
+    const [uploadReset, setUploadReset] = useState(0);
     const [documentCount, setDocumentCount] = useState(0);
 
     const [popups, setPopups] = useState({
@@ -87,13 +88,13 @@ export default function StepThree() {
         if (confirmed === true) {
             setProject({
                 ...project,
-                document: {
-                    name: ''
-                },
+                document: null,
+                documentname: '',
+                docContent: '',
                 type: '',
                 category: ''
             })
-            setUploadType(0);
+            setUploadReset(1);
         }
     }
 
@@ -129,24 +130,19 @@ export default function StepThree() {
 
     const handleClickCategoryInfo = () => {
         setCategoryPopup(true)
-        console.log('sdf')
     }
 
     useEffect(() => {
         setProject({
             ...project,
             user: user.id,
-            document: {
-                name: '',
-                others: '',
-                type: '',
-                category: '',
-                file: null
-            }
+            document: null
         })
+        console.log("project1:");
+        console.log(project);
 
         api.get_document_count().then(({ data }) => {
-            console.log(data)
+        //    console.log(data)
             setDocumentCount(data);
         })
 
@@ -184,7 +180,7 @@ export default function StepThree() {
     }, [])
 
     const style1 = (documentCount > 0 && uploadType !== 1) == 0 ? '' : 'grid grid-cols-2 gap-4';
-
+    console.log("uploadReset: "+uploadReset);
     return (
         <div>
             <h3 className="font-Eina03 font-bold text-[20px] text-[#222] mt-[56px] mb-[24px]">Upload document</h3>
@@ -192,7 +188,7 @@ export default function StepThree() {
 
             <div>
                 <div className={`mb-[15px] ${style1}`}>
-                    <UploadArea onUpload={handleUpload} reset={!uploadType}/>
+                    <UploadArea onUpload={handleUpload} reset={uploadReset}/>
                     {(documentCount > 0 && uploadType !== 1) &&
                         <div className='flex flex-col items-center justify-center font-Eina03 text-[16px] border-dashed border border-[#E5E5E5] rounded-[6px] font-bold bg-[#F6FAFF] py-[20px] text-center'>
                             <svg className="mb-[18px]" width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -228,11 +224,11 @@ export default function StepThree() {
                         </div>
                         <div className="flex">
                             <div>
-                                <h3 className="font-bold text-[14px] text-[#232F3E]">{project.document.name}</h3>
-                                <p className="text-[#667085] text-[12px]">{Math.round((project.document.size / 1024) * 100) / 100} KB</p>
+                                <h3 className="font-bold text-[14px] text-[#232F3E]">{project.document?.name}</h3>
+                                <p className="text-[#667085] text-[12px]">{Math.round((project.document?.size / 1024) * 100) / 100} KB</p>
                             </div>
                             <div className="ml-auto flex items-center">
-                                {/* <a href="#" onClick={handleEditDocument}>
+                                <a href="#" onClick={() => handleDelete(false)}>
                                     <svg width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g clipPath="url(#clip0_49_6734)">
                                             <path d="M1 16.5H13.6866" stroke="#737373" strokeWidth="1.71429" strokeLinecap="round" strokeLinejoin="round" />
@@ -244,7 +240,7 @@ export default function StepThree() {
                                             </clipPath>
                                         </defs>
                                     </svg>
-                                </a>// [COMMENTED-YH-1]*/}
+                                </a>
                                 <a href="#" className="ml-1" onClick={() => handleDelete(false)}>
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M18.5332 7.33343L17.7237 18.6664C17.6539 19.6433 16.8411 20.4001 15.8618 20.4001H8.13796C7.15863 20.4001 6.34581 19.6433 6.27604 18.6664L5.46654 7.33343M10.1332 11.0668V16.6668M13.8665 11.0668V16.6668M14.7999 7.33343V4.53343C14.7999 4.01797 14.382 3.6001 13.8665 3.6001H10.1332C9.61774 3.6001 9.19987 4.01797 9.19987 4.53343V7.33343M4.5332 7.33343H19.4665" stroke="#737373" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round" />

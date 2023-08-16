@@ -24,8 +24,8 @@ export default function StepFour() {
 
       api.convert_file_to_html(fd).then((data) => {
         if (data.data) {
-          console.log("New Doc: ", data);
-          console.log(data.data)
+        //  console.log("New Doc: ", data);
+        //  console.log(data.data)
           setData(data.data);
           setProject({ ...project, docContent: data.data })
           setEditorLoaded(true);
