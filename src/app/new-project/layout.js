@@ -123,7 +123,7 @@ export default function NewProjectLayout({ children }) {
         push("/new-project/"+steps[2].slug);
       }else if(activeStep == steps[2].slug){
         handleCreateProject();
-        push("/active-projects");
+      //  push("/active-projects");
       }
     /*// [COMMENTED-YH-1]
       const currentIndex = steps.findIndex((item) => item.slug == activeStep);
@@ -375,7 +375,7 @@ export default function NewProjectLayout({ children }) {
     });
     await promise.then(() => {
       message.destroy("analyzing");
-    //  push("/active-projects");// [COMMENTED-YH-0]
+      push("/active-projects");// [COMMENTED-YH-0]
 
       message.open({
         type: 'success',
@@ -411,7 +411,7 @@ export default function NewProjectLayout({ children }) {
           </NewProjectContext.Provider>
         </Card>
         <div className="fixed bottom-0 z-[2] left-0 right-0 border-t p-[15px] bg-[#fff] lg:pl-[270px] pl-0 ">
-          <div className={`mx-auto max-w-[800px] flex items-center justify-between`}>
+          <div className={`mx-auto max-w-[1128px] flex items-center justify-between`}>
             <Button
               {...{ disabled: !isCanPrev() }}
               onClick={handlePrev}
