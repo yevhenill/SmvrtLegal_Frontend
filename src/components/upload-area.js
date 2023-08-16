@@ -35,6 +35,8 @@ export default function UploadArea({ onUpload, reset, uploadedfile }) {
         if (uploadedfile) {
             console.log('uploaded:');
             console.log(uploadedfile);
+            setUploading(true)
+            setProgress(100)
             setFile(uploadedfile);
         }
       }, []);

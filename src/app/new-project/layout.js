@@ -91,9 +91,9 @@ export default function NewProjectLayout({ children }) {
     const currentIndex = steps.findIndex((item) => item.slug == activeStep);
     if(currentIndex > 0){
       const targetStep = steps[currentIndex - 1];
-      if (final) { 
-        setFinal(false) 
-      }
+      // if (final) { 
+      //   setFinal(false) 
+      // }
       onChangeActiveStep(targetStep);
     }    
   };
@@ -391,7 +391,7 @@ export default function NewProjectLayout({ children }) {
     const segments = location.pathname.split("/");
     segments.pop();
     const step = segments.pop();
-
+    console.log(step);
     if (["new-project"].includes(step)) {
       setActiveStep("");
     }

@@ -99,7 +99,6 @@ export default function StepThree() {
     }
 
     const handleUpload = (upload) => {
-        console.log(upload);
         setProject({
             ...project,
             document: upload,
@@ -136,15 +135,20 @@ export default function StepThree() {
         setProject({
             ...project,
             user: user.id,
-            document: null
+        //    document: null
         })
         console.log("project1:");
         console.log(project);
 
-        api.get_document_count().then(({ data }) => {
-        //    console.log(data)
-            setDocumentCount(data);
-        })
+        if(!project.document){
+            api.get_document_count().then(({ data }) => {
+                    console.log(data)
+                setDocumentCount(data);
+            })
+        }else{
+            setUploadType(1);
+        }
+        
 
         // api.get_categories().then(({ data }) => {
         //     data = data || []
@@ -178,7 +182,6 @@ export default function StepThree() {
         //     ])
         // })
     }, [])
-
     const style1 = (documentCount > 0 && uploadType !== 1) == 0 ? '' : 'grid grid-cols-2 gap-4';
     console.log("uploadReset: "+uploadReset);
     return (
@@ -188,7 +191,7 @@ export default function StepThree() {
 
             <div>
                 <div className={`mb-[15px] ${style1}`}>
-                    <UploadArea onUpload={handleUpload} reset={uploadReset}/>
+                    <UploadArea onUpload={handleUpload} reset={uploadReset} uploadedfile={project.document}/>
                     {(documentCount > 0 && uploadType !== 1) &&
                         <div className='flex flex-col items-center justify-center font-Eina03 text-[16px] border-dashed border border-[#E5E5E5] rounded-[6px] font-bold bg-[#F6FAFF] py-[20px] text-center'>
                             <svg className="mb-[18px]" width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
