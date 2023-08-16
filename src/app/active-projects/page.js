@@ -61,7 +61,6 @@ export default function ActiveProject() {
         api
             .projects()
             .then(({ data }) => {
-                console.log('data', data)
                 setProjects([
                     ...data.map(row => {
                         return {

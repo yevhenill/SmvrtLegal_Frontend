@@ -57,7 +57,7 @@ export function initPusher(user) {
               callback(null, response);
             })
             .catch((error) => {
-              console.eror(error);
+              console.error(error);
               callback(error);
             });
         },
@@ -422,6 +422,17 @@ export function convert_file_to_html(data) {
 
 export function openAI_summarize_document(data) {
   return request(API_ENDPOINT + "/api/openai/create-req", {
+    method: "POST",
+    headers: {
+      authorization: `Bearer ${getToken()}`,
+      accept: "application/json",
+    },
+    body: JSON.stringify(data),
+  }).then((data) => data.json());
+}
+
+export function openAI_get_content(data) {
+  return request(API_ENDPOINT + "/api/openai/get-response", {
     method: "POST",
     headers: {
       authorization: `Bearer ${getToken()}`,

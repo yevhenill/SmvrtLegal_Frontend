@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function UploadArea({ onUpload }) {
+export default function UploadArea({ onUpload, reset }) {
     const [uploading, setUploading] = useState(false);
     const [progress, setProgress] = useState(0);
     const [file, setFile] = useState(null);
@@ -16,10 +16,6 @@ export default function UploadArea({ onUpload }) {
         }, 1000)
     }
 
-    const reset = () => {
-        handleReset();
-    }
-
     const handleReset = () => {
         setProgress(0)
         setUploading(false)
@@ -27,10 +23,12 @@ export default function UploadArea({ onUpload }) {
         onUpload(null)
     }
 
-    // useEffect(() => {
-    //     handleReset();
-    // }, [])
-
+    useEffect(() => {
+      if (reset) {
+        handleReset();
+      }
+    }, [reset]);
+    
     return (
             <>
                 <div className="flex overflow-hidden relative flex-col p-[20px] items-center jusitfy-cneter bg-[#F7FAFF] border-dashed border border-[#E5E5E5] rounded-[6px]">

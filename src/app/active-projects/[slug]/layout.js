@@ -133,6 +133,8 @@ export default function ProjectDetailsLayout({ children }) {
   const [description, setDescription] = useState('');
   const [spanId, setSpanId] = useState('');
 
+  
+  /*// [COMMENTED-YH-2] 
   const sumDoc = async (contentValue) => {
     var results = ''
     $('#description').html('');
@@ -226,13 +228,38 @@ export default function ProjectDetailsLayout({ children }) {
       setDescription(results)
     }
   };
+  */// [COMMENTED-YH-2]
+  const sumDoc = async (content) => {
+    const openAiResponse = await api
+      .openAI_summarize_document({
+        content: content,
+        max_tokens: "500",
+        prompt: "Summarize this for a second-grade student: ",
+      })
+      .then(({ data }) => {
+        return new Promise((resolve, reject) => {
+          resolve(data.choices.map((row) => row.text).join(" "));
+        });
+      });
 
+    return openAiResponse;
+  };
   const handleClickDescription = async (event) => {
     setDescription("Loading ...");
     const content = event?.target?.closest("span")?.parentNode?.innerText;
     setSpanId(event?.target?.closest("span")?.parentNode.id);
-    const response = await sumDoc(content);
-    setDescription(response);
+    /*// [MODIFIED-YH-2]
+    const openAiResponse = await api
+      .openAI_get_content({
+        content: content,
+      })
+      .then(({ data }) => {
+        setDescription(data);  
+      });
+    */
+           
+  //  const response = await sumDoc(content);// [COMMENTED-YH-2]
+  //  setDescription(response);// [COMMENTED-YH-2]
   };
 
   return (
@@ -264,7 +291,7 @@ export default function ProjectDetailsLayout({ children }) {
             </div>
             <div className="bg-white p-[20px] rounded-[6px]">
               <div className="text-[16px] text-[#8792A8] font-bold">Description</div>
-              <div id="description"></div>
+              <div id="description">{description}</div>
             </div>
           </div>
           <div className="w-[100px] p-[20px]" style={{ borderLeft: '1px solid #d7d7d7e0' }}>

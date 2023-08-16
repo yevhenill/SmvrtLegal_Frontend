@@ -247,16 +247,17 @@ export default function NewProjectLayout({ children }) {
 
         plainTexts = [...plainTexts, ...tempPlainTexts];
       }
+
+      push("/active-projects");// [COMMENTED-YH-0]
+
       message.destroy("analyzing");
       message.open({
         key: "analyzing",
         type: "loading",
-        content: "Our super smart AI is simplifying your document! Hang Tight...we'll be done within a minute.(50%)",
+        content: "Our super smart AI is simplifying your document! Hang Tight...we'll be done within a minute. (50%)",
         duration: 0,
       });
-      console.log("PLAN", plainTexts);
-      console.log("STRIP", strippedTexts);
-
+      
       let summaryHtml = content;
 
       for (let index = 0; index < plainTexts.length; index++) {
@@ -286,7 +287,7 @@ export default function NewProjectLayout({ children }) {
       message.open({
         key: "analyzing",
         type: "loading",
-        content: "Our super smart AI is simplifying your document! Hang Tight...we'll be done within a minute.  (75%)",
+        content: "Our super smart AI is simplifying your document! Hang Tight...we'll be done within a minute. (75%)",
         duration: 0,
       });
       await api
@@ -362,10 +363,16 @@ export default function NewProjectLayout({ children }) {
         });
       resolve("done!");
     });
-
+    message.destroy("analyzing");
+    message.open({
+      key: "analyzing",
+      type: "loading",
+      content: "Our super smart AI is simplifying your document! Hang Tight...we'll be done within a minute. (100%)",
+      duration: 0,
+    });
     await promise.then(() => {
       message.destroy("analyzing");
-      push("/active-projects");
+    //  push("/active-projects");// [COMMENTED-YH-0]
 
       message.open({
         type: 'success',
@@ -392,8 +399,8 @@ export default function NewProjectLayout({ children }) {
 
   return (
     <DashboardLayout>
-      <div className="lg:pl-[270px] pl-0 pt-[150px] pr-[15px] relative pb-[100px]">
-        <Card className={`${final ? 'w-[100%]' : 'max-w-[800px]'} mx-auto`}>
+      <div className="lg:pl-[270px] pl-0 pt-[116px] pr-[15px] relative pb-[100px]"> {/*pt-[150px] => pt-[116px]// [COMMENTED-YH-1]*/}
+        <Card className={`px-[36px] lg:max-w-[1128px] md:w-full mx-auto`}> {/*${final ? 'w-[100%]' : 'max-w-[800px]'} => // [COMMENTED-YH-1]*/}
           <Stepper steps={steps} active={activeStep} onChange={onChangeActiveStep} />
 
           <NewProjectContext.Provider value={{ project, setProject, handleNext }}>
