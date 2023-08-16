@@ -167,7 +167,7 @@ export default function NewProjectLayout({ children }) {
         return false;
       }
     }else if (activeStep == steps[1].slug){
-      if (!project.documentname || !project.type || !project.category) {
+      if (!project.documentname/* || !project.type || !project.category*/) {
         return false;
       }
     }else if(activeStep == steps[2].slug){
@@ -382,7 +382,7 @@ export default function NewProjectLayout({ children }) {
         content: (
           <span dangerouslySetInnerHTML={{ __html: `Your document is ready! <a style="color: #4096ff;" href="/active-projects">Click here</a> to view.` }} />
         ),
-        duration: 100 * 1000,
+        duration: 10 * 1000,
       });
     });
   };
