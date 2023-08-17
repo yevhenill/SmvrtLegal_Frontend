@@ -42,7 +42,7 @@ export default function DatePicker({ label, placeholder, value, reminder, onChan
                 <a href="#" onClick={e => { e.preventDefault(); handleClickReminderSettings(); }} className="whitespace-nowrap text-[#1860CC] underline underline-offset-2 translate-y-[10px] ml-8 text-[14px]">Reminder setting</a>
                 {
                     open ? 
-                    <div className="absolute right-[0] translate-x-[50%] translate-y-[-50%] top-0 z-[20]">
+                    <div className="absolute right-[0] translate-y-[-60%] top-[0] z-[1]">
                         <Calendar 
                             reminderMode={reminderSettingsMode} 
                             onSave={handleSave} 

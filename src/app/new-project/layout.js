@@ -176,11 +176,12 @@ export default function NewProjectLayout({ children }) {
     return true;
   };
 
+  const analyzingMessage = "Simplifying legal docs with AI magic! Just a sec...almost done! ";
   const handleCreateProject = async () => {
     message.open({
       key: "analyzing",
       type: "loading",
-      content: "Our super smart AI is simplifying your document! Hang Tight...we'll be done within a minute.",
+      content: analyzingMessage+"0%",
       duration: 0,
     });
 
@@ -257,7 +258,7 @@ export default function NewProjectLayout({ children }) {
       message.open({
         key: "analyzing",
         type: "loading",
-        content: "Our super smart AI is simplifying your document! Hang Tight...we'll be done within a minute. (25%)",
+        content: analyzingMessage+"25%",
         duration: 0,
       });
       
@@ -290,7 +291,7 @@ export default function NewProjectLayout({ children }) {
       message.open({
         key: "analyzing",
         type: "loading",
-        content: "Our super smart AI is simplifying your document! Hang Tight...we'll be done within a minute. (50%)",
+        content: analyzingMessage+"50%",
         duration: 0,
       });
       await api
@@ -370,7 +371,7 @@ export default function NewProjectLayout({ children }) {
     message.open({
       key: "analyzing",
       type: "loading",
-      content: "Our super smart AI is simplifying your document! Hang Tight...we'll be done within a minute. (75%)",
+      content: analyzingMessage+"75%",
       duration: 0,
     });
     await promise.then(() => {
@@ -422,7 +423,7 @@ export default function NewProjectLayout({ children }) {
             <Button
               {...{ disabled: !isCanNext() }}
               onClick={handleNext}
-              label={(activeStep==steps[2].slug)?"Save & Go to Active Project":"Save and Continue"}
+              label={(activeStep==steps[2].slug)?"Save & Start Project":"Save and Continue"}
               className="bg-[#1860CC] !text-white font-bold !w-auto text-[14px] px-[20px]"
             />
           </div>

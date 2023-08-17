@@ -31,6 +31,12 @@ export default function NewProject() {
             reminderdate: moment(date).format('MM/DD/YYYY')
         })
     }
+    // Get Date
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');    
+    const currentDate = `${year}/${month}/${day}`;
 
     return (
         <div>
@@ -46,7 +52,7 @@ export default function NewProject() {
             <div className="mb-[16px]">
                 <DatePicker 
                     label="Due Date"
-                    placeholder="01/10/2023"
+                    placeholder={currentDate}
                     onChange={handleAddDueDate}
                     onChangeReminderSettings={onChangeReminderSettings}
                     value={project.duedate}
