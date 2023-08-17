@@ -383,12 +383,25 @@ export default function NewProjectLayout({ children }) {
         content: (
           <span dangerouslySetInnerHTML={{ __html: `Your document is ready! <a style="color: #4096ff;" href="/active-projects">Click here</a> to view.` }} />
         ),
-        duration: 10 * 1000,
+        duration: 30 * 1000,
       });
     });
   };
+  
+  const fetchData = async () => {
+    try {
+      const { data } = await api.get_document_count();
+      setProject({
+        ...project,
+        userDocumentCount: data,
+      });
+    } catch (error) {
+      // Handle any errors here
+    }
+  };
 
   useEffect(() => {
+    fetchData();
     const segments = location.pathname.split("/");
     segments.pop();
     const step = segments.pop();

@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Create the UserContext
+// Create the NewProjectContext
 const NewProjectContext = createContext();
 
-// Custom hook for accessing the UserContext
+// Custom hook for accessing the NewProjectContext
 export function useNewProject() {
   return useContext(NewProjectContext);
 }

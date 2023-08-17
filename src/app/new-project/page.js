@@ -12,15 +12,6 @@ import * as api from '@/api'
 export default function NewProject() {
     const {project, setProject} = useNewProject();
    
-    useEffect(() => {
-        api.get_document_count().then(({ data }) => {
-            setProject({
-                ...project,
-                userDocumentCount: data,
-            })
-        })        
-    }, [])
-
     const handleChange = (value, field) => {
         setProject({
             ...project,
