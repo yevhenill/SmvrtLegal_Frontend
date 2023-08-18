@@ -140,14 +140,9 @@ export default function StepThree() {
         console.log("project1:");
         console.log(project);
 
-        // if(!project.document){
-        //     api.get_document_count().then(({ data }) => {
-        //             console.log(data)
-        //         setDocumentCount(data);
-        //     })
-        // }else{
-        //     setUploadType(1);
-        // }
+        if(project.document){
+            setUploadType(1);
+        }
         
 
         // api.get_categories().then(({ data }) => {
