@@ -102,7 +102,7 @@ export default function StepThree() {
         setProject({
             ...project,
             document: upload,
-            documentname: upload ? upload.name.split(".")[0] : '',
+            documentname: upload ? removeFileExtension(upload.name) : '',
         });
         setPopups({
             ...popups,
@@ -113,6 +113,16 @@ export default function StepThree() {
 
         if (upload == null) {
             setUploadType(0);
+        }
+    }
+
+    const removeFileExtension = (fileName) => {
+        const lastDotIndex = fileName.lastIndexOf('.');
+        if (lastDotIndex !== -1 && lastDotIndex !== 0 && lastDotIndex < fileName.length - 1) {
+            const nameWithoutExtension = fileName.substring(0, lastDotIndex);
+            return nameWithoutExtension;
+        } else {
+            return fileName;
         }
     }
 
@@ -135,22 +145,22 @@ export default function StepThree() {
         setProject({
             ...project,
             user: user.id,
-        //    document: null//--test
+            //    document: null//--test
         })
         console.log("project1:");
         console.log(project);
 
-        if(project.document){
+        if (project.document) {
             setUploadType(1);
         }
     }, [])
-    if(docCount === -1) {
+    if (docCount === -1) {
         return (
             <p>Loading...</p>
         )
     }
     const style1 = (docCount > 0 && uploadType !== 1) == 0 ? '' : 'grid grid-cols-2 gap-4';
-    console.log("uploadReset: "+uploadReset);
+    console.log("uploadReset: " + uploadReset);
     return (
         <div>
             <h3 className="font-Eina03 font-bold text-[20px] text-[#222] mt-[56px] mb-[24px]">Upload document</h3>
@@ -158,7 +168,7 @@ export default function StepThree() {
 
             <div>
                 <div className={`mb-[15px] ${style1}`}>
-                    <UploadArea onUpload={handleUpload} reset={uploadReset} uploadedfile={project.document}/>
+                    <UploadArea onUpload={handleUpload} reset={uploadReset} uploadedfile={project.document} />
                     {(docCount > 0 && uploadType !== 1) &&
                         <div className='flex flex-col items-center justify-center font-Eina03 text-[16px] border-dashed border border-[#E5E5E5] rounded-[6px] font-bold bg-[#F6FAFF] py-[20px] text-center' style={{ cursor: 'pointer' }}>
                             <svg className="mb-[18px]" width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
