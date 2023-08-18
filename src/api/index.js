@@ -441,3 +441,30 @@ export function openAI_get_content(data) {
     body: JSON.stringify(data),
   }).then((data) => data.json());
 }
+
+export function send_email() {
+  fetch('https://wirth-hats.onrender.com/api/SMTP/sendEmail', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          email: 'jfallhowe@gmail.com',
+          html: `<div style="width: 400px; margin: auto; font-family: sans-serif; color: #737373;">
+      <img src="https://i.ibb.co/2FsFjj6/logo.png">
+      <div>Just a quick reminder that you have a project due soon. Here are the details:</div>
+      <ul style="font-size: 16px; line-height: 24px;">
+          <li class="padding-bottom: 10px;"><b>Due Date:</b> January 1, 2023</li>
+          <li class="padding-bottom: 10px;"><b>Project Name:</b> First NDA.</li>
+          <li class="padding-bottom: 10px;"><b>Team:</b> SMVRT team</li>
+          <li class="padding-bottom: 10px;"><b>Document Type:</b> NDA</li>
+      </ul>
+      <a style="display: block; margin-top: 10px; width: 100%; height: 36px; gap: 16px; border-radius: 6px; border: 1px solid #737373; color: #000; text-decoration: none; padding-top: 14px;
+      text-align: center; background-color: transparent;" href="http://135.181.185.159:3000/active-projects/95/">View Project</a>
+    </div>`
+      }) // Replace with your JSON payload
+  })
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
+}
