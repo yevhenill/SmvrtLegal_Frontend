@@ -11,7 +11,6 @@ import { useUser } from '@/context/user';
 import UploadArea from '@/components/upload-area.js';
 import * as api from '@/api'
 import SearchDocumentProperty from '@/components/search-document-property.js';
-import SelectDocumentProperty from '@/components/select-document-property.js';
 import CategoryInfo from '../../../popups/category-info';
 
 
@@ -224,7 +223,7 @@ export default function StepThree() {
                     <div className='grid grid-cols-2 gap-4'>
                         <div className='pt-[15px] mb-[24px]'>
                             <div className='grid gap-[16px] grid-cols-[1fr]'>
-                                <SelectDocumentProperty
+                                <SearchDocumentProperty
                                     value={project.type}
                                     type="type"
                                     onInput={(value) => setProject({ ...project, type: value })}
@@ -240,7 +239,7 @@ export default function StepThree() {
                                     <path d="M10.2856 7.42857C10.6801 7.42857 10.9999 7.10877 10.9999 6.71429C10.9999 6.3198 10.6801 6 10.2856 6C9.89109 6 9.57129 6.3198 9.57129 6.71429C9.57129 7.10877 9.89109 7.42857 10.2856 7.42857Z" stroke="#B8C2CC" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                             </span>
-                            <SelectDocumentProperty
+                            <SearchDocumentProperty
                                 value={project.category}
                                 placeholder="My Documents, Business, Music, Sales, etc."
                                 type="category"
