@@ -27,7 +27,8 @@ export default function ProjectStatus({ id, type }) {
         overdue: 'bg-[#FBE3E2] border-[#D94042] text-[#D94042] border',
         newversionreceived: 'text-white bg-[#297FFF]',
         tosign: 'text-white bg-[#FF9C64]',
-        new: 'text-white bg-[#75DD7F]',
+        new: 'text-[#7A2CB8] bg-[#F2EBF8]',
+        newversion: 'text-[#7A2CB8] bg-[#F2EBF8] font-Eina03',
     }
 
     if(status === 'pending') {
@@ -43,7 +44,7 @@ export default function ProjectStatus({ id, type }) {
             </>
         )
     }
-    return (<div className={`${themes[status]} text-[10px] py-[3px] min-w-[100px] text-center font-bold rounded-[2px] flex items-center w-full justify-center`}>
+    return (<div className={`${themes[status]} text-[12px] py-[3px] min-w-[102px] text-center font-bold rounded-[4px] flex items-center w-full justify-center`}>
         { status }
     </div>);
 }
