@@ -22,15 +22,18 @@ export default function StepFour() {
       fd.append("documentname", project.documentname);
     //  fd.append("docContent", project.docContent);
 
-      api.convert_file_to_html(fd).then((data) => {
-        if (data.data) {
-        //  console.log("New Doc: ", data);
-        //  console.log(data.data)
-          setData(data.data);
-          setProject({ ...project, docContent: data.data })
-          setEditorLoaded(true);
-        }
-      });
+      // api.convert_file_to_html(fd).then((data) => {
+      //   if (data.data) {
+      //   //  console.log("New Doc: ", data);
+      //   //  console.log(data.data)
+      //     setData(data.data);
+      //     setProject({ ...project, docContent: data.data })
+      //     setEditorLoaded(true);
+      //   }
+      // });
+      // setData('fwefwfwfew');
+      // setProject({ ...project, docContent: 'jpfowjpfjw' });
+      setEditorLoaded(true);
       return;
     }
 

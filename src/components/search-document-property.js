@@ -55,7 +55,7 @@ export default function SearchDocumentProperty({ type, placeholder, value, onInp
     return (
         <div className="relative">
             <Input
-                label={(type=='type')?'Document Type':'Category'}
+                label={(type=='type')?'Document Type':'Folder'}
                 placeholder={placeholder}
                 value={val}
                 onClick={(event) =>handleClick(event)}

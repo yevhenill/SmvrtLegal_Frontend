@@ -45,7 +45,6 @@ export default function VerifyEmailAddress(props) {
 
     const handleClickCategoryInfo = () => {
         setCategoryPopup(true)
-        console.log('sdf')
     }
 
     useEffect(() => {

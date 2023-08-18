@@ -52,6 +52,8 @@ export default function NewProjectLayout({ children }) {
     },
   });
 
+  const [docCount, setDocCount] = useState(-1);
+
   const [project, setProject] = useState({
     name: "",
     leads: {},
@@ -191,11 +193,76 @@ export default function NewProjectLayout({ children }) {
       fd.append("documentname", project.documentname);
       fd.append("docContent", project.docContent);
 
+      for (let key in project) {
+        fd.append(key, project[key]);
+      }
+
+      fd.set("final_approver", JSON.stringify(project.final_approver));
+      if (project.team) {
+        fd.set("team", JSON.stringify(project.team));
+      }
+
+      // fd.set("members", JSON.stringify(project.members));
+      // fd.set("external_collaborators", JSON.stringify(project.external_collaborators));
+      // fd.set("signatories", JSON.stringify(project.signatories));
+      // fd.set("approvers", JSON.stringify(project.approvers));
+
+      project.approvers.forEach((member) => {
+        fd.append("approvers[]", JSON.stringify(member));
+      });
+
+      project.members.forEach((member) => {
+        fd.append("members[]", JSON.stringify(member));
+      });
+
+      project.external_collaborators.forEach((member) => {
+        fd.append("external_collaborators[]", JSON.stringify(member));
+      });
+
+      project.signatories.forEach((member) => {
+        fd.append("signatories[]", JSON.stringify(member));
+      });
+
+      fd.set("leads", JSON.stringify(project.leads));
+
+      fd.set("save_for_future", project.save_for_future ? 1 : 0);
+
+      api.create_project(fd).then((data) => {
+        const errors = data.errors ? Object.values(data.errors) : [];
+        if (errors.length || data.exception) {
+          const message = Object.values(errors).flat(1).join(" ") || data.message;
+          setPopup({
+            ...popup,
+            server_error: {
+              visible: true,
+              message,
+            },
+          });
+          reject('done');
+        }
+        resolve('done');
+      });
+    });
+
+    await promise.then(() => {
+      console.log('transition');
+      message.destroy("analyzing");
+      push("/active-projects");// [COMMENTED-YH-0]
+
+      message.open({
+        type: 'success',
+        content: (
+          <span dangerouslySetInnerHTML={{ __html: `Your document is ready! <a style="color: #4096ff;" href="/active-projects">Click here</a> to view.` }} />
+        ),
+        duration: 30 * 1000,
+      });
+    });
 
       // let content = await api.convert_file_to_html(fd).then((data) => {
       //   return new Promise((resolve, reject) => resolve(data.data));
       // });
 
+      /*
       let content = project.docContent;
       let plainText = content;
       const tempElement = document.createElement("div");
@@ -315,55 +382,7 @@ export default function NewProjectLayout({ children }) {
           console.log("total", project);
 
         //  const fd = new FormData();
-          for (let key in project) {
-            fd.append(key, project[key]);
-          }
-
-          fd.set("final_approver", JSON.stringify(project.final_approver));
-          if (project.team) {
-            fd.set("team", JSON.stringify(project.team));
-          }
-
-          // fd.set("members", JSON.stringify(project.members));
-          // fd.set("external_collaborators", JSON.stringify(project.external_collaborators));
-          // fd.set("signatories", JSON.stringify(project.signatories));
-          // fd.set("approvers", JSON.stringify(project.approvers));
-
-          project.approvers.forEach((member) => {
-            fd.append("approvers[]", JSON.stringify(member));
-          });
-
-          project.members.forEach((member) => {
-            fd.append("members[]", JSON.stringify(member));
-          });
-
-          project.external_collaborators.forEach((member) => {
-            fd.append("external_collaborators[]", JSON.stringify(member));
-          });
-
-          project.signatories.forEach((member) => {
-            fd.append("signatories[]", JSON.stringify(member));
-          });
-
-          fd.set("leads", JSON.stringify(project.leads));
-
-          fd.set("save_for_future", project.save_for_future ? 1 : 0);
-
-          api.create_project(fd).then((data) => {
-            const errors = data.errors ? Object.values(data.errors) : [];
-            if (errors.length || data.exception) {
-              const message = Object.values(errors).flat(1).join(" ") || data.message;
-              setPopup({
-                ...popup,
-                server_error: {
-                  visible: true,
-                  message,
-                },
-              });
-              return;
-            }
-            return;
-          });
+          
         });
       resolve("done!");
     });
@@ -385,16 +404,14 @@ export default function NewProjectLayout({ children }) {
         ),
         duration: 30 * 1000,
       });
-    });
+    });*/
+
   };
   
   const fetchData = async () => {
     try {
       const { data } = await api.get_document_count();
-      setProject({
-        ...project,
-        userDocumentCount: data,
-      });
+      setDocCount(data);
     } catch (error) {
       // Handle any errors here
     }
@@ -420,7 +437,7 @@ export default function NewProjectLayout({ children }) {
         <Card className={`px-[36px] lg:max-w-[1128px] md:w-full mx-auto`}> {/*${final ? 'w-[100%]' : 'max-w-[800px]'} => // [COMMENTED-YH-1]*/}
           <Stepper steps={steps} active={activeStep} onChange={onChangeActiveStep} />
 
-          <NewProjectContext.Provider value={{ project, setProject, handleNext }}>
+          <NewProjectContext.Provider value={{ project, docCount, setProject, handleNext }}>
             {children}
           </NewProjectContext.Provider>
         </Card>

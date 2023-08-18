@@ -3,6 +3,7 @@ import Calendar from "./calendar";
 import Input from "./input";
 import calendarsvg from '@/assets/calendar.svg'
 import moment from 'moment';
+import * as api from '@/api'
 
 export default function DatePicker({ label, placeholder, value, reminder, onChange, onChangeReminderSettings }) {
     const [open, setOpen] = useState(false)
@@ -25,6 +26,10 @@ export default function DatePicker({ label, placeholder, value, reminder, onChan
         setOpen(true);
     }
 
+    const sendmail = () => {
+        api.send_email();
+    }
+
     return (<div className="flex items-center relative z-[10]">
                 <Input 
                     label={label}
@@ -40,6 +45,13 @@ export default function DatePicker({ label, placeholder, value, reminder, onChan
                     readOnly={true}
                 />
                 <a href="#" onClick={e => { e.preventDefault(); handleClickReminderSettings(); }} className="whitespace-nowrap text-[#1860CC] underline underline-offset-2 translate-y-[10px] ml-8 text-[14px]">Reminder setting</a>
+                {reminder && (
+                    <>
+                        <br/>
+                        <button onClick={sendmail}>send mail</button>
+                    </>
+
+                )}
                 {
                     open ? 
                     <div className="absolute right-[0] translate-y-[-60%] top-[0] z-[1]">

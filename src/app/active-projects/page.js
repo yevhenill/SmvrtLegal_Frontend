@@ -34,25 +34,25 @@ export default function ActiveProject() {
             label: 'Status',
             getValue: (row) => {
                 return (
-                    <ProjectStatus type={row.status.toLowerCase().replace(/\s*/g, '')}>{row.status}</ProjectStatus>
+                    <ProjectStatus type={row.status.toLowerCase().replace(/\s*/g, '')}/>
                 );
             }
         },
-        {
-            label: 'Lead',
-            getValue: (row) => {
-                // const members = row['team'] && row['team']['members'] || []
-                // const [lead] = members;
-                const leads = [];
-                row['leads'].forEach(lead => {
-                    if (lead.email) {
-                        leads.push(lead.fname ? lead.fname + ' ' + lead.lname : lead.email);
-                    }
-                });
+        // {
+        //     label: 'Lead',
+        //     getValue: (row) => {
+        //         // const members = row['team'] && row['team']['members'] || []
+        //         // const [lead] = members;
+        //         const leads = [];
+        //         row['leads'].forEach(lead => {
+        //             if (lead.email) {
+        //                 leads.push(lead.fname ? lead.fname + ' ' + lead.lname : lead.email);
+        //             }
+        //         });
 
-                return leads.join(',');
-            }
-        }
+        //         return leads.join(',');
+        //     }
+        // }
     ]);
 
     const [projects, setProjects] = useState(null);
