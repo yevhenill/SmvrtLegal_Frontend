@@ -11,6 +11,7 @@ import { useUser } from '@/context/user';
 import UploadArea from '@/components/upload-area.js';
 import * as api from '@/api'
 import SearchDocumentProperty from '@/components/search-document-property.js';
+import SelectDocumentProperty from '@/components/select-document-property.js';
 import CategoryInfo from '../../../popups/category-info';
 
 
@@ -135,7 +136,7 @@ export default function StepThree() {
         setProject({
             ...project,
             user: user.id,
-        //    document: null
+        //    document: null//--test
         })
         console.log("project1:");
         console.log(project);
@@ -143,39 +144,6 @@ export default function StepThree() {
         if(project.document){
             setUploadType(1);
         }
-        
-
-        // api.get_categories().then(({ data }) => {
-        //     data = data || []
-        //     console.log(data)
-        //     setCategories([
-        //         {
-        //             label: 'Select category',
-        //             value: '',
-        //         },
-        //         ...data.map((item) => {
-        //             return {
-        //                 label: item.name,
-        //                 value: item.id,
-        //             }
-        //         })
-        //     ]);
-        // })
-
-        // api.get_document_types().then(({ data }) => {
-        //     setTypes([
-        //         {
-        //             label: 'Select type',
-        //             value: '',
-        //         },
-        //         ...data.map((item) => {
-        //             return {
-        //                 label: item.name,
-        //                 value: item.id,
-        //             }
-        //         })
-        //     ])
-        // })
     }, [])
     if(docCount === -1) {
         return (
@@ -256,10 +224,9 @@ export default function StepThree() {
                     <div className='grid grid-cols-2 gap-4'>
                         <div className='pt-[15px] mb-[24px]'>
                             <div className='grid gap-[16px] grid-cols-[1fr]'>
-                                <SearchDocumentProperty
+                                <SelectDocumentProperty
                                     value={project.type}
                                     type="type"
-                                    // onInput={(value) => setForm({ ...form, type: value })}
                                     onInput={(value) => setProject({ ...project, type: value })}
                                     placeholder="NDA, MSA, SOW"
                                 />
@@ -273,11 +240,10 @@ export default function StepThree() {
                                     <path d="M10.2856 7.42857C10.6801 7.42857 10.9999 7.10877 10.9999 6.71429C10.9999 6.3198 10.6801 6 10.2856 6C9.89109 6 9.57129 6.3198 9.57129 6.71429C9.57129 7.10877 9.89109 7.42857 10.2856 7.42857Z" stroke="#B8C2CC" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                             </span>
-                            <SearchDocumentProperty
+                            <SelectDocumentProperty
                                 value={project.category}
                                 placeholder="My Documents, Business, Music, Sales, etc."
                                 type="category"
-                                // onInput={(value) => setForm({ ...form, category: value })}
                                 onInput={(value) => setProject({ ...project, category: value })}
                             />
                         </div>

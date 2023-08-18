@@ -178,12 +178,12 @@ export default function NewProjectLayout({ children }) {
     return true;
   };
 
-  const analyzingMessage = "Simplifying legal docs with AI magic! Just a sec...almost done! ";
+  const analyzingMessage = "Simplifying legal docs with AI magic! Just a sec...almost done!";
   const handleCreateProject = async () => {
     message.open({
       key: "analyzing",
       type: "loading",
-      content: analyzingMessage+"0%",
+      content: analyzingMessage,
       duration: 0,
     });
 
@@ -246,17 +246,16 @@ export default function NewProjectLayout({ children }) {
     });
 
     await promise.then(() => {
-      console.log('transition');
       message.destroy("analyzing");
       push("/active-projects");// [COMMENTED-YH-0]
 
-      message.open({
-        type: 'success',
-        content: (
-          <span dangerouslySetInnerHTML={{ __html: `Your document is ready! <a style="color: #4096ff;" href="/active-projects">Click here</a> to view.` }} />
-        ),
-        duration: 30 * 1000,
-      });
+      // message.open({
+      //   type: 'success',
+      //   content: (
+      //     <span dangerouslySetInnerHTML={{ __html: `Your document is ready! <a style="color: #4096ff;" href="/active-projects">Click here</a> to view.` }} />
+      //   ),
+      //   duration: 30 * 1000,
+      // });
     });
 
       // let content = await api.convert_file_to_html(fd).then((data) => {

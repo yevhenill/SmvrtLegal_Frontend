@@ -31,12 +31,11 @@ export default function SelectDocumentProperty({ type, placeholder, value, onInp
         api
         .search_document_property({ type, search: '' })
         .then((data) => {
-            console.log(data);
             if (data.data) {
                 setItems(data.data);
             }
         })
-    });
+    }, []);
     
     return (
         <div className="relative">
@@ -45,7 +44,7 @@ export default function SelectDocumentProperty({ type, placeholder, value, onInp
                     <label 
                         htmlFor="success" 
                         className="block mb-2 text-sm font-Eina03 font-bold"
-                        >{(type=='type')?'Document Type':'Category'}
+                        >{(type=='type')?'Document Type':'Folder'}
                     </label>
                 }
                 <div className={`relative`}>

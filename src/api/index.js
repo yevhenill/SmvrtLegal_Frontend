@@ -399,6 +399,17 @@ export function search_document_property(params) {
   }).then((data) => data.json());
 }
 
+export function select_document_property(params) {
+  const query = new URLSearchParams(params).toString();
+  return request(API_ENDPOINT + "/api/document/select/propery?" + query, {
+    method: "GET",
+    headers: {
+      ...headers,
+      authorization: `Bearer ${getToken()}`,
+    },
+  }).then((data) => data.json());
+}
+
 export function statistics() {
   return request(API_ENDPOINT + "/api/statistics", {
     method: "GET",
