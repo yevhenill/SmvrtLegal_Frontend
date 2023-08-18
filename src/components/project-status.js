@@ -44,7 +44,10 @@ export default function ProjectStatus({ id, type }) {
             </>
         )
     }
-    return (<div className={`${themes[status]} text-[12px] py-[3px] min-w-[102px] text-center font-bold rounded-[4px] flex items-center w-full justify-center`}>
+    return (
+    <div 
+        className={`${themes[status]} text-[12px] py-[3px] min-w-[102px] text-center font-bold rounded-[4px] flex items-center w-full justify-center`}
+        style={{ textTransform: 'uppercase' }}>
         { status }
     </div>);
 }
