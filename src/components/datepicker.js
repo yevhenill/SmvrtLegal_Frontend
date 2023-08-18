@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Calendar from "./calendar";
 import Input from "./input";
+import Button from "./button";
 import calendarsvg from '@/assets/calendar.svg'
 import moment from 'moment';
 import * as api from '@/api'
@@ -48,7 +49,11 @@ export default function DatePicker({ label, placeholder, value, reminder, onChan
                 {reminder && (
                     <>
                         <br/>
-                        <button onClick={sendmail}>send mail</button>
+                        <Button 
+                            label="Send mail"
+                            className="bg-[#4ECFE0] text-[14px] min-w-[80px]"
+                            onClick={sendmail}
+                        />
                     </>
 
                 )}
