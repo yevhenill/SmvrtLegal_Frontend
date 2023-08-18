@@ -10,13 +10,13 @@ export default function ProjectStatus({ id, type }) {
         if(status === 'pending') {
             const interval = setInterval(() => {
                 if (progress < 100) {
-                    setProgress((prevProgress) => prevProgress + 10);
+                    setProgress((prevProgress) => prevProgress + 1);
                 } else if(progress === 100) {
                     setStatus('new');
                     api.update_project_status({id});
                     setProgress(101);
                 }
-            }, 1000);
+            }, 100);
             return () => clearInterval(interval);
         }
     }, [progress]);
@@ -33,17 +33,17 @@ export default function ProjectStatus({ id, type }) {
     if(status === 'pending') {
         return (
             <>
-                <span>{ status }</span>
+                {/* <span>{ status }</span> */}
                 <div className="w-full h-2 bg-gray-200 rounded">
                     <div
-                        className="h-full bg-blue-500 rounded"
+                        className="h-full bg-blue-500"
                         style={{ width: `${progress}%` }}
                     ></div>
                 </div>
             </>
         )
     }
-    return (<div className={`${themes[status]} text-[10px] py-[3px] min-w-[100px] text-center font-bold rounded-[25px] flex items-center w-full justify-center`}>
+    return (<div className={`${themes[status]} text-[10px] py-[3px] min-w-[100px] text-center font-bold rounded-[2px] flex items-center w-full justify-center`}>
         { status }
     </div>);
 }
