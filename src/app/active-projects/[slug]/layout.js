@@ -86,7 +86,7 @@ export default function ProjectDetailsLayout({ children }) {
         ...project,
         id: data.id,
         name: data.name,
-        doctype: data.document.type,
+        doctype: data.document?.type,
         updated_at: moment(data.updated_at).format("ll"),
         created_at: moment(data.created_at).format("ll"),
         due_date: moment(data.due_date).format("ll"),

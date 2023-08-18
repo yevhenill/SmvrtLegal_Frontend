@@ -160,7 +160,7 @@ export default function StepThree() {
                 <div className={`mb-[15px] ${style1}`}>
                     <UploadArea onUpload={handleUpload} reset={uploadReset} uploadedfile={project.document}/>
                     {(docCount > 0 && uploadType !== 1) &&
-                        <div className='flex flex-col items-center justify-center font-Eina03 text-[16px] border-dashed border border-[#E5E5E5] rounded-[6px] font-bold bg-[#F6FAFF] py-[20px] text-center'>
+                        <div className='flex flex-col items-center justify-center font-Eina03 text-[16px] border-dashed border border-[#E5E5E5] rounded-[6px] font-bold bg-[#F6FAFF] py-[20px] text-center' style={{ cursor: 'pointer' }}>
                             <svg className="mb-[18px]" width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M19.9287 8.28564H9.643C8.69622 8.28564 7.92871 9.05316 7.92871 9.99993V25.4285C7.92871 26.3753 8.69622 27.1428 9.643 27.1428H19.9287C20.8755 27.1428 21.643 26.3753 21.643 25.4285V9.99993C21.643 9.05316 20.8755 8.28564 19.9287 8.28564Z" stroke="#4ECFE0" strokeWidth="1.71429" strokeLinecap="round" strokeLinejoin="round" />
                                 <path d="M11.3574 12.5715H18.2146" stroke="#4ECFE0" strokeWidth="1.71429" strokeLinecap="round" strokeLinejoin="round" />

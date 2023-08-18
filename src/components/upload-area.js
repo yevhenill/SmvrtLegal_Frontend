@@ -40,9 +40,10 @@ export default function UploadArea({ onUpload, reset, uploadedfile }) {
             setFile(uploadedfile);
         }
       }, []);
+
     return (
             <>
-                <div className="flex overflow-hidden relative flex-col p-[20px] items-center jusitfy-cneter bg-[#F7FAFF] border-dashed border border-[#E5E5E5] rounded-[6px]">
+                <div className="flex overflow-hidden relative flex-col p-[20px] items-center jusitfy-cneter bg-[#F7FAFF] border-dashed border border-[#E5E5E5] rounded-[6px] cursor-pointer" style={{ cursor: 'pointer' }}>
                     {
                     ! uploading && ! file ? (
                         <>
