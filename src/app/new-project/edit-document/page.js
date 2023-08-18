@@ -5,7 +5,25 @@ import { useNewProject } from "@/context/new-project";
 import { useState, useEffect } from "react";
 import * as api from "@/api";
 
+// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+// import { CKEditor } from "@ckeditor/ckeditor5-react";
+import mammoth from "mammoth";
+
 export default function StepFour() {
+
+  const handleDocFileChange = (event) => {
+    const file = event.target.files[0];
+
+    mammoth.convertToHtml({ arrayBuffer: file })
+      .then((result) => {
+        const html = result.value;
+        setHtmlContent(html);
+      })
+      .catch((error) => {n
+        console.error("Error converting DOC to HTML:", error);
+      });
+  };
+
   const [editorLoaded, setEditorLoaded] = useState(false);
   const [data, setData] = useState("");
 
@@ -17,10 +35,21 @@ export default function StepFour() {
 
   const readFile = () => {
     if (project.document instanceof Blob) {
-      const fd = new FormData();
-      fd.append("document", project.document);
-      fd.append("documentname", project.documentname);
-    //  fd.append("docContent", project.docContent);
+      // const fd = new FormData();
+      // fd.append("document", project.document);
+      // fd.append("documentname", project.documentname);
+
+      mammoth.convertToHtml({ arrayBuffer: project.document })
+      .then((result) => {
+        const html = result.value;
+        changeEditordata(html);
+        setEditorLoaded(true);
+      })
+      .catch((error) => {n
+        console.error("Error converting DOC to HTML:", error);
+      });
+
+      //  fd.append("docContent", project.docContent);
 
       // api.convert_file_to_html(fd).then((data) => {
       //   if (data.data) {
@@ -33,16 +62,13 @@ export default function StepFour() {
       // });
       // setData('fwefwfwfew');
       // setProject({ ...project, docContent: 'jpfowjpfjw' });
-      setEditorLoaded(true);
       return;
     }
 
-    setEditorLoaded(true);
+    //setEditorLoaded(true);
   };
 
   const changeEditordata = (data) => {
-    console.log('Data is modified')
-    console.log(data);
     setData(data)
     setProject({ ...project, docContent: data })
   }

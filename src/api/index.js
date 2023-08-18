@@ -3,7 +3,7 @@
 import { setCookie } from "@/utils/helpers";
 
 // const API_ENDPOINT = "https://7139-83-234-227-11.ngrok-free.app";
-const API_ENDPOINT = "http://localhost:8000";
+const API_ENDPOINT = "http://192.168.143.117:8000";
 const getToken = () => {
   return localStorage.getItem("token") ?? "";
 };
