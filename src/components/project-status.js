@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from "react";
 import * as api from '@/api'
 
-export default function ProjectStatus({ type }) {
-    const [status, setSatus] = useState(type || 'internalapproval');
+export default function ProjectStatus({ id, type }) {
+    const [status, setStatus] = useState(type || 'internalapproval');
 
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
-      const interval = setInterval(() => {
-        if (progress < 100) {
-          setProgress((prevProgress) => prevProgress + 10);
-        } else {
-            setSatus('new');
+        if(status === 'pending') {
+            const interval = setInterval(() => {
+                if (progress < 100) {
+                    setProgress((prevProgress) => prevProgress + 10);
+                } else if(progress === 100) {
+                    setStatus('new');
+                    api.update_project_status({id});
+                    setProgress(101);
+                }
+            }, 1000);
+            return () => clearInterval(interval);
         }
-      }, 1000);
-  
-      return () => clearInterval(interval);
     }, [progress]);
 
     const themes = {

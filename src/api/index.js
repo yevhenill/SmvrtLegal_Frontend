@@ -468,3 +468,14 @@ export function send_email() {
   .then(data => console.log(data))
   .catch(error => console.error(error));
 }
+
+export function update_project_status(data) {
+  return request(API_ENDPOINT + "/api/project/"+data.id+"/update", {
+    method: "GET",
+    headers: {
+      authorization: `Bearer ${getToken()}`,
+      accept: "application/json",
+    },
+    // body: JSON.stringify(data),
+  }).then((data) => console.log(data));
+}

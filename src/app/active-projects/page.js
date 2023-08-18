@@ -34,7 +34,7 @@ export default function ActiveProject() {
             label: 'Status',
             getValue: (row) => {
                 return (
-                    <ProjectStatus type={row.status.toLowerCase().replace(/\s*/g, '')}/>
+                    <ProjectStatus id={row.id} type={row.status.toLowerCase().replace(/\s*/g, '')}/>
                 );
             }
         },
@@ -62,7 +62,7 @@ export default function ActiveProject() {
             .projects()
             .then(({ data }) => {
                 setProjects([
-                    ...data.map(row => {
+                    ...data?.map(row => {
                         return {
                             ...row,
                             due_date: moment(row.due_date).format('ll'),

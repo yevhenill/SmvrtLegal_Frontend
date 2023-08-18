@@ -284,7 +284,7 @@ export default function ProjectDetailsLayout({ children }) {
           <div className="grid grid-cols-3 grid-flow-col gap-4 mr-[10px] pt-[20px] pr-[10px]">
             <div className="col-span-2 bg-white p-[20px] rounded-[6px]">
               <FullViewDescription
-                content={project?.document?.content}
+                content={project?.summaryhtml}
                 onClick={handleClickDescription}
                 spanId={spanId}
               />
