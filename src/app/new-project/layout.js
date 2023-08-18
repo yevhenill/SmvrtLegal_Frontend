@@ -192,6 +192,7 @@ export default function NewProjectLayout({ children }) {
       fd.append("document", project.document);
       fd.append("documentname", project.documentname);
       fd.append("docContent", project.docContent);
+      fd.append('summaryhtml', project.docContent);
 
       for (let key in project) {
         fd.append(key, project[key]);
