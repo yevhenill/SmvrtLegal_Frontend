@@ -170,7 +170,7 @@ export default function StepThree() {
                 <div className={`mb-[15px] ${style1}`}>
                     <UploadArea onUpload={handleUpload} reset={uploadReset} uploadedfile={project.document} />
                     {(docCount > 0 && uploadType !== 1) &&
-                        <div className='flex flex-col items-center justify-center font-Eina03 text-[16px] border-dashed border border-[#E5E5E5] rounded-[6px] font-bold bg-[#F6FAFF] py-[20px] text-center' style={{ cursor: 'pointer' }}>
+                        <div className='flex flex-col items-center justify-center font-Eina03 text-[16px] border-dashed border border-[#E5E5E5] rounded-[6px] bg-[#F6FAFF] py-[20px] text-center' style={{ cursor: 'pointer' }}>
                             <svg className="mb-[18px]" width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M19.9287 8.28564H9.643C8.69622 8.28564 7.92871 9.05316 7.92871 9.99993V25.4285C7.92871 26.3753 8.69622 27.1428 9.643 27.1428H19.9287C20.8755 27.1428 21.643 26.3753 21.643 25.4285V9.99993C21.643 9.05316 20.8755 8.28564 19.9287 8.28564Z" stroke="#4ECFE0" strokeWidth="1.71429" strokeLinecap="round" strokeLinejoin="round" />
                                 <path d="M11.3574 12.5715H18.2146" stroke="#4ECFE0" strokeWidth="1.71429" strokeLinecap="round" strokeLinejoin="round" />
@@ -178,7 +178,8 @@ export default function StepThree() {
                                 <path d="M11.3574 21.1428H14.786" stroke="#4ECFE0" strokeWidth="1.71429" strokeLinecap="round" strokeLinejoin="round" />
                                 <path d="M12.2148 4.85718H23.3577C23.8124 4.85718 24.2484 5.03779 24.5699 5.35928C24.8914 5.68077 25.072 6.11681 25.072 6.57146V22.8572" stroke="#4ECFE0" strokeWidth="1.71429" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
-                            Select from library
+                            <h3 className="text-[#212936] text-[14px] font-bold">Select from library</h3>
+                            <p className="text-[#777E86] text-[12px]">Maximum file size 50MB</p>
                         </div>
                     }
                 </div>

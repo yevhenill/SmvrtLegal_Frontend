@@ -43,7 +43,7 @@ export default function UploadArea({ onUpload, reset, uploadedfile }) {
 
     return (
             <>
-                <div className="flex overflow-hidden relative flex-col p-[20px] items-center jusitfy-cneter bg-[#F7FAFF] border-dashed border border-[#E5E5E5] rounded-[6px] cursor-pointer" style={{ cursor: 'pointer' }}>
+                <div className="flex overflow-hidden relative flex-col p-[20px] items-center jusitfy-cneter bg-[#F7FAFF] border-dashed border border-[#E5E5E5] rounded-[6px]">
                     {
                     ! uploading && ! file ? (
                         <>
@@ -51,13 +51,14 @@ export default function UploadArea({ onUpload, reset, uploadedfile }) {
                                 <path d="M4.27795 24.2001H16.7224C18.097 24.2001 19.2113 23.0857 19.2113 21.7112V9.78218C19.2113 9.45213 19.0802 9.13561 18.8468 8.90223L12.1091 2.16454C11.8757 1.93116 11.5592 1.80005 11.2292 1.80005H4.27795C2.90338 1.80005 1.78906 2.91436 1.78906 4.28894V21.7112C1.78906 23.0857 2.90338 24.2001 4.27795 24.2001Z" fill="#F7FAFF"/>
                                 <path d="M6.76684 14.2445H14.2335M10.5002 10.5112L10.5002 17.9778M16.7224 24.2H4.27795C2.90338 24.2 1.78906 23.0857 1.78906 21.7112V4.28894C1.78906 2.91436 2.90338 1.80005 4.27795 1.80005H11.2292C11.5592 1.80005 11.8757 1.93116 12.1091 2.16454L18.8468 8.90223C19.0802 9.13561 19.2113 9.45213 19.2113 9.78218V21.7112C19.2113 23.0857 18.097 24.2 16.7224 24.2Z" stroke="#4ECFE0" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"/>
                             </svg>
-                            <h3 className="text-[#171717] text-[14px] font-bold">Click to upload or drag and drop</h3>
-                            <p className="text-[#737373] text-[12px]">Maximum file size 50MB</p>
+                            <h3 className="text-[#212936] text-[14px] font-bold">Click to upload or drag and drop</h3>
+                            <p className="text-[#777E86] text-[12px]">Maximum file size 50MB</p>
                             <input 
                                 className="opacity-0 absolute left-0 top-0 text-[70rem]"
                                 type="file"
                                 onChange={handleUpload}
                                 accept="text/*, .doc, .docx, application/msword"
+                                style={{ cursor: 'pointer' }}
                             /></>
                     )
                         :<></>
