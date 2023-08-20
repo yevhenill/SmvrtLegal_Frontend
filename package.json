@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "laravel-echo": "^1.15.1",
+    "postcss-nesting": "^12.0.1",
     "pusher-js": "^8.0.2"
   }
 }

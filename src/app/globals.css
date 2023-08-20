@@ -255,3 +255,5 @@ Preserve the relative scale, though. */
 .full-view-desc table td {
   border-color: #000;
 }
+
+::-webkit-file-upload-button { cursor:pointer; }
