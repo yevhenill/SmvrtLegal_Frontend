@@ -1,7 +1,9 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from "react";
-
+// import { CKEditor } from '@ckeditor/ckeditor5-react';
+// import { ClassicEditor } from '@ckeditor/ckeditor5-editor-classic';
+// import { ImportWord } from '@ckeditor/ckeditor5-import-word';
 
 export default function CKeditor({ onChange, editorLoaded, name, value }) {
     const [editor, setEditor] = useState(false);
@@ -31,7 +33,7 @@ export default function CKeditor({ onChange, editorLoaded, name, value }) {
                     const toolbarContainer = window.document.querySelector( '.document-editor__toolbar' );
                     toolbarContainer.appendChild( editor.ui.view.toolbar.element );
                     editor.setData(value);
-                    
+
                     // Add onChange event listener
                     editor.model.document.on('change:data', () => {
                       const updatedValue = editor.getData();
@@ -45,10 +47,10 @@ export default function CKeditor({ onChange, editorLoaded, name, value }) {
                     console.error( err );
                 } );
             }
-            
+
         }
     }, [editorLoaded]);
-    
+
     return (
         <>
             {
@@ -57,7 +59,7 @@ export default function CKeditor({ onChange, editorLoaded, name, value }) {
                         <div className="document-editor__toolbar"></div>
                         <div className="document-editor__editable-container">
                             <div className="document-editor__editable">
-                            
+
                             </div>
                         </div>
                     </div>

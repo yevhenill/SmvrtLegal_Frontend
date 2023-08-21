@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Input from "./input";
 import * as api from '@/api'
 
@@ -6,6 +6,7 @@ export default function SearchDocumentProperty({ type, placeholder, value, onInp
     const [val, setValue] = useState(value);
     const [items, setItems] = useState([]);
     const [showList, setShowList] = useState(false);
+    const searchInputRef = useRef(null);
 
     useEffect(() => {
         setValue(value);
@@ -23,7 +24,6 @@ export default function SearchDocumentProperty({ type, placeholder, value, onInp
         api
             .search_document_property({ type, search: value })
             .then((data) => {
-                console.log(data)
                 if (data.data) {
                     setItems(data.data);
                     setShowList(data.data.length);
@@ -41,35 +41,49 @@ export default function SearchDocumentProperty({ type, placeholder, value, onInp
         const { value } = event.target;
         if (value == '') {
             api
-            .search_document_property({ type, search: '' })
-            .then((data) => {
-                console.log(data)
-                if (data.data) {
-                    setItems(data.data);
-                    setShowList(data.data.length);
-                }
-            })
+                .search_document_property({ type, search: '' })
+                .then((data) => {
+                    if (data.data) {
+                        var items = data.data;
+                        if (type === "category")
+                            items.push("My document");
+                        setItems(items);
+                        setShowList(data.data.length);
+                    }
+                })
         }
     }
 
-    const handleBlur = (event) => {
-        setShowList(false);
+    const handleBlur = () => {
+        if (val === '')
+            setShowList(false);
     }
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+			if (event.target.name !== "searchlist") handleBlur();
+		}
+		document.addEventListener("click", handleClickOutside);
+		return () => {
+			document.removeEventListener("click", handleClickOutside);
+		};
+    }, [searchInputRef, handleBlur]);
 
     return (
         <div className="relative">
             <Input
-                label={(type=='type')?'Document Type':'Category'}
+                label={(type == 'type') ? 'Document Type' : 'Category'}
                 placeholder={placeholder}
                 value={val}
-                onClick={(event) =>handleClick(event)}
-                onBlur={(e) => handleBlur(event)}
+                onClick={(event) => handleClick(event)}
+                // onBlur={(event) => handleBlur(event)}
                 onInput={(event) => handleInput(event)}
                 autoComplete="off"
+                ref={searchInputRef}
             />
             {
                 showList ? (
-                    <div className="absolute top-[100%]  text-[14px] left-0 bg-white z-[999] shadow p-3 w-full rounded cursor-pointer">
+                    <div className="absolute top-[100%]  text-[14px] left-0 bg-white z-[999] shadow p-3 w-full rounded cursor-pointer" name="searchlist">
                         {
                             items.map((item, key) => {
                                 return (

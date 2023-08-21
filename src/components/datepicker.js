@@ -9,7 +9,6 @@ import * as api from '@/api'
 export default function DatePicker({ label, placeholder, value, reminder, onChange, onChangeReminderSettings }) {
     const [open, setOpen] = useState(false)
     const [reminderSettingsMode, setReminderSettingsMode] = useState(false);
-
     const [date, setDate] = useState(value ? moment(value).format('MM/DD/YYYY') : '')
     const handleSave = (value) => {
         if (reminderSettingsMode) {
@@ -59,7 +58,7 @@ export default function DatePicker({ label, placeholder, value, reminder, onChan
                 )}
                 {
                     open ? 
-                    <div className="absolute right-[0] translate-y-[-60%] top-[0] z-[1]">
+                    <div className="absolute right-[200px] translate-y-[-60%] top-[0] z-[10]" name="newprojectcalendar">
                         <Calendar 
                             reminderMode={reminderSettingsMode} 
                             onSave={handleSave} 

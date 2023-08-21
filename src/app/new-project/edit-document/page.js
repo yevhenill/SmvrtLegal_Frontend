@@ -19,7 +19,7 @@ export default function StepFour() {
         const html = result.value;
         setHtmlContent(html);
       })
-      .catch((error) => {n
+      .catch((error) => {
         console.error("Error converting DOC to HTML:", error);
       });
   };

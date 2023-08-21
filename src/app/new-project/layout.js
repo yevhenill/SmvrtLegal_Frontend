@@ -8,19 +8,17 @@ import Button from "@/components/button";
 import searchsvg from "@/assets/search.svg";
 
 import NewProjectContext from "@/context/new-project";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { message } from "antd";
 import * as api from "@/api";
 
 import ServerError from "@/popups/server-error";
 import ServerSuccess from "@/popups/server-success";
-import Link from "next/link"
 
 
 export default function NewProjectLayout({ children }) {
-  const { push } = useRouter();
-
-  const [final, setFinal] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
   const [steps, setSteps] = useState([
     {
       label: "Add project details",
@@ -82,7 +80,7 @@ export default function NewProjectLayout({ children }) {
 
   const onChangeActiveStep = (step) => {
     setActiveStep(step.slug);
-    push("/new-project/" + step.slug);
+    router.push("/new-project/" + step.slug);
   };
 
   const handlePrev = () => {
@@ -98,10 +96,10 @@ export default function NewProjectLayout({ children }) {
     if (status) {
       if(activeStep == steps[0].slug){
         setActiveStep(steps[1].slug);
-        push("/new-project/"+steps[1].slug);
+        router.push("/new-project/"+steps[1].slug);
       }else if (activeStep == steps[1].slug){
         setActiveStep(steps[2].slug);
-        push("/new-project/"+steps[2].slug);
+        router.push("/new-project/"+steps[2].slug);
       }else if(activeStep == steps[2].slug){
         handleCreateProject();
       }
@@ -194,8 +192,7 @@ export default function NewProjectLayout({ children }) {
 
     await promise.then(() => {
       message.destroy("analyzing");
-      push("/active-projects");// [COMMENTED-YH-0]
-
+      router.push("/active-projects"); // [COMMENTED-YH-0]
       message.open({
         type: 'success',
         content: (
@@ -220,7 +217,6 @@ export default function NewProjectLayout({ children }) {
     const segments = location.pathname.split("/");
     segments.pop();
     const step = segments.pop();
-    console.log(step);
     if (["new-project"].includes(step)) {
       setActiveStep("");
     }
@@ -228,6 +224,10 @@ export default function NewProjectLayout({ children }) {
       setActiveStep(step);
     }
   }, []);
+
+  useEffect(() => {
+
+  }, [pathname])
 
   return (
     <DashboardLayout>

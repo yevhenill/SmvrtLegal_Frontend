@@ -16,7 +16,7 @@
     "@ckeditor/ckeditor5-build-classic": "^38.1.1",
     "@ckeditor/ckeditor5-build-decoupled-document": "^38.1.0",
     "@ckeditor/ckeditor5-editor-decoupled": "^38.1.0",
-    "@ckeditor/ckeditor5-import-word": "^38.1.0",
+    "@ckeditor/ckeditor5-import-word": "^38.1.1",
     "@ckeditor/ckeditor5-react": "^6.1.0",
     "antd": "^5.8.2",
     "autoprefixer": "10.4.14",
