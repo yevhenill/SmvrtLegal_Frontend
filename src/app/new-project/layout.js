@@ -26,10 +26,6 @@ export default function NewProjectLayout({ children }) {
       label: "Add project details",
       slug: "",
     },
-    // {
-    //   label: "Team & Collaborators",
-    //   slug: "step-2",
-    // },
     {
       label: "Upload Document",
       slug: "step-3",
@@ -93,29 +89,12 @@ export default function NewProjectLayout({ children }) {
     const currentIndex = steps.findIndex((item) => item.slug == activeStep);
     if(currentIndex > 0){
       const targetStep = steps[currentIndex - 1];
-      // if (final) { 
-      //   setFinal(false) 
-      // }
       onChangeActiveStep(targetStep);
     }    
   };
 
   const handleNext = () => {
-    // Check if the "role" value is null for any member
     let status = true;
-    /*// [COMMENTED-YH-1]
-    for (let i = 0; i < project.members.length; i++) {
-      if (project.members[i].role.value === null || project.members[i].role.value === "") {
-        setPopup({
-          ...popup,
-          server_error: {
-            visible: true,
-            message: `Please assign a role to <b>${project.members[i].name}</b> before continuing`,
-          },
-        });
-        status = false;
-      }
-    } */
     if (status) {
       if(activeStep == steps[0].slug){
         setActiveStep(steps[1].slug);
@@ -125,34 +104,7 @@ export default function NewProjectLayout({ children }) {
         push("/new-project/"+steps[2].slug);
       }else if(activeStep == steps[2].slug){
         handleCreateProject();
-      //  push("/active-projects");
       }
-    /*// [COMMENTED-YH-1]
-      const currentIndex = steps.findIndex((item) => item.slug == activeStep);
-      
-      const targetStep = steps[currentIndex + 1];
-
-      if (final) {
-        push("/active-projects");
-        handleCreateProject();
-      }
-
-      // if (activeStep == 'step-3') {
-      //   push("/active-projects");
-      //   handleCreateProject();
-      // }
-
-      setFinal(false)
-      if (targetStep == steps[steps.length - 1]) {
-        setFinal(true)
-        push("/new-project/edit-document");
-        return;
-      }
-
-      if (currentIndex != steps.length - 1) {
-        setActiveStep(targetStep.slug);
-        push("/new-project/step-" + (currentIndex + 3));
-      }*/
     }
   };
 
@@ -164,15 +116,15 @@ export default function NewProjectLayout({ children }) {
   };
 
   const isCanNext = () => {
-    if(activeStep == steps[0].slug){
+    if (activeStep == steps[0].slug){
       if (!project.name || !project.duedate) {
         return false;
       }
-    }else if (activeStep == steps[1].slug){
+    } else if (activeStep == steps[1].slug){
       if (!project.documentname/* || !project.type || !project.category*/) {
         return false;
       }
-    }else if(activeStep == steps[2].slug){
+    } else if(activeStep == steps[2].slug){
 
     }
     return true;
@@ -202,11 +154,6 @@ export default function NewProjectLayout({ children }) {
       if (project.team) {
         fd.set("team", JSON.stringify(project.team));
       }
-
-      // fd.set("members", JSON.stringify(project.members));
-      // fd.set("external_collaborators", JSON.stringify(project.external_collaborators));
-      // fd.set("signatories", JSON.stringify(project.signatories));
-      // fd.set("approvers", JSON.stringify(project.approvers));
 
       project.approvers.forEach((member) => {
         fd.append("approvers[]", JSON.stringify(member));
@@ -249,154 +196,6 @@ export default function NewProjectLayout({ children }) {
       message.destroy("analyzing");
       push("/active-projects");// [COMMENTED-YH-0]
 
-      // message.open({
-      //   type: 'success',
-      //   content: (
-      //     <span dangerouslySetInnerHTML={{ __html: `Your document is ready! <a style="color: #4096ff;" href="/active-projects">Click here</a> to view.` }} />
-      //   ),
-      //   duration: 30 * 1000,
-      // });
-    });
-
-      // let content = await api.convert_file_to_html(fd).then((data) => {
-      //   return new Promise((resolve, reject) => resolve(data.data));
-      // });
-
-      /*
-      let content = project.docContent;
-      let plainText = content;
-      const tempElement = document.createElement("div");
-      const bodyStart = plainText.indexOf("<body");
-      if (bodyStart != null) {
-        plainText = plainText.slice(content.indexOf("<body"), plainText.length);
-      }
-
-      plainText = plainText.replace(/\n/gi, " ").replace(/(<([^>]+)>)/gi, "");
-      tempElement.innerHTML = plainText;
-
-      const regexps = [/(<p\b[^>]*>).*?(<\/p>)/gis, /(<li\b[^>]*>)(.*?)(<\/li>)/gis];
-
-      const htmlTagsRegex = /<\/?[^>]+(>|$)/g;
-      const stripRegex = /^<[^>]+>|<\/[^>]+>$/g;
-      const tableRegex = /(<p\b)(?:(?!<\/table>).)*?(<table\b.*?>)|<\/table.*?\/p>/gis;
-
-      content = content.replace(/text-indent:.*?;/g, "");
-
-      let noTables = content.match(tableRegex);
-
-      if (!noTables) noTables = [content];
-
-      let strippedTexts = [];
-      let plainTexts = [];
-
-      for (let index = 0; index < noTables.length; index++) {
-        const noTable = noTables[index];
-        const tempStrippedTexts = regexps.flatMap((regexp) => {
-          const matches = noTable.match(regexp);
-          const coreMatch = [];
-          matches &&
-            matches.forEach((mat) => {
-              if (mat.match(/(<(span\b[^>]*)>((?!&#xa0;)(?!<).)*?<\/span>)/gis)) coreMatch.push(mat);
-            });
-          return coreMatch.map((match) => match.replace(stripRegex, ""));
-        });
-
-        strippedTexts = [...strippedTexts, ...tempStrippedTexts];
-      }
-
-      for (let index = 0; index < noTables.length; index++) {
-        const noTable = noTables[index];
-        const tempPlainTexts = regexps.flatMap((regexp) => {
-          const matches = noTable.match(regexp);
-          const coreMatch = [];
-          matches &&
-            matches.forEach((mat) => {
-              if (mat.match(/(<(span\b[^>]*)>((?!&#xa0;)(?!<).)*?<\/span>)/gis)) coreMatch.push(mat);
-            });
-          return coreMatch.map((match) => match.replace(htmlTagsRegex, ""));
-        });
-
-        plainTexts = [...plainTexts, ...tempPlainTexts];
-      }
-
-      push("/active-projects");// [COMMENTED-YH-0]
-
-      message.destroy("analyzing");
-      message.open({
-        key: "analyzing",
-        type: "loading",
-        content: analyzingMessage+"25%",
-        duration: 0,
-      });
-      
-      let summaryHtml = content;
-
-      for (let index = 0; index < plainTexts.length; index++) {
-        const item = plainTexts[index];
-        const old = strippedTexts[index];
-
-        // Check if the current index is a multiple of 50
-        if ((index + 1) % 50 === 0) {
-          await new Promise((resolve) => setTimeout(resolve, 1000));
-        }
-
-        await api
-          .openAI_summarize_document({
-            content: item,
-          })
-          .then((data) => {
-            function escapeRegExp(string) {
-              return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-            }
-            summaryHtml = summaryHtml.replace(
-              new RegExp(escapeRegExp(old), "g"),
-              data?.data?.choices?.map((res) => res.text).join("")
-            );
-          });
-      }
-      message.destroy("analyzing");
-      message.open({
-        key: "analyzing",
-        type: "loading",
-        content: analyzingMessage+"50%",
-        duration: 0,
-      });
-      await api
-        .openAI_summarize_document({
-          content: "Agreement Document",
-        })
-        .then((data) => {
-          project.ai_summary = data?.data?.choices?.map((item) => item.text).join("");
-          project.content = content;
-          project.summaryhtml = summaryHtml;
-
-          setPopup({
-            ...popup,
-            server_success: {
-              title: "Success",
-              visible: false,
-              message: "",
-            },
-          });
-
-          console.log("total", project);
-
-        //  const fd = new FormData();
-          
-        });
-      resolve("done!");
-    });
-    message.destroy("analyzing");
-    message.open({
-      key: "analyzing",
-      type: "loading",
-      content: analyzingMessage+"75%",
-      duration: 0,
-    });
-    await promise.then(() => {
-      message.destroy("analyzing");
-      push("/active-projects");// [COMMENTED-YH-0]
-
       message.open({
         type: 'success',
         content: (
@@ -404,8 +203,7 @@ export default function NewProjectLayout({ children }) {
         ),
         duration: 30 * 1000,
       });
-    });*/
-
+    });
   };
   
   const fetchData = async () => {

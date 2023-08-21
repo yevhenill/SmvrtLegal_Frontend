@@ -52,6 +52,10 @@ export default function SearchDocumentProperty({ type, placeholder, value, onInp
         }
     }
 
+    const handleBlur = (event) => {
+        setShowList(false);
+    }
+
     return (
         <div className="relative">
             <Input
@@ -59,6 +63,7 @@ export default function SearchDocumentProperty({ type, placeholder, value, onInp
                 placeholder={placeholder}
                 value={val}
                 onClick={(event) =>handleClick(event)}
+                onBlur={(e) => handleBlur(event)}
                 onInput={(event) => handleInput(event)}
                 autoComplete="off"
             />
