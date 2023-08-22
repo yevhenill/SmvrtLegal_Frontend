@@ -3,26 +3,16 @@
 import CKeditor from "@/components/ckeditor";
 import { useNewProject } from "@/context/new-project";
 import { useState, useEffect } from "react";
+
+import jwt from 'jsonwebtoken';
+import axios from 'axios';
+import FormData from 'form-data';
+
 import * as api from "@/api";
 
-// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-// import { CKEditor } from "@ckeditor/ckeditor5-react";
 import mammoth from "mammoth";
 
 export default function StepFour() {
-
-  const handleDocFileChange = (event) => {
-    const file = event.target.files[0];
-
-    mammoth.convertToHtml({ arrayBuffer: file })
-      .then((result) => {
-        const html = result.value;
-        setHtmlContent(html);
-      })
-      .catch((error) => {
-        console.error("Error converting DOC to HTML:", error);
-      });
-  };
 
   const [editorLoaded, setEditorLoaded] = useState(false);
   const [data, setData] = useState("");
@@ -35,37 +25,38 @@ export default function StepFour() {
 
   const readFile = () => {
     if (project.document instanceof Blob) {
-      // const fd = new FormData();
-      // fd.append("document", project.document);
-      // fd.append("documentname", project.documentname);
+      const accessKey = '5WxA3fJ9oXzNklCyzNwSZgF1JXAcz3T9iqyARPPZkLQVPoW44D6OfTjzkH04';
+      const environmentId = 'u5gGisqGXzPJ21UGgTo4';
+      const token = jwt.sign({ aud: environmentId }, accessKey)
+      const config = {
+        headers: {
+          'Authorization': token
+        }
+      };
 
-      mammoth.convertToHtml({ arrayBuffer: project.document })
-      .then((result) => {
-        const html = result.value;
-        changeEditordata(html);
-        setEditorLoaded(true);
-      })
-      .catch((error) => {n
-        console.error("Error converting DOC to HTML:", error);
-      });
+      const conversionConfig = {
+        default_styles: true,
+        collaboration_features: {
+          user_id: 'example_user_id',
+          comments: true,
+          track_changes: false
+        }
+      };
+      const formData = new FormData();
+      formData.append('config', JSON.stringify(conversionConfig));
+      formData.append('file', project.document, project.documentname);
+      axios.post('https://docx-converter.cke-cs.com/v2/convert/docx-html', formData, config)
+        .then(response => {
+          console.log(response)
+          const html = response.data.html;
+          changeEditordata(html);
+          setEditorLoaded(true);
+        }).catch(error => {
+          console.log('Conversion error', error);
+        });
 
-      //  fd.append("docContent", project.docContent);
-
-      // api.convert_file_to_html(fd).then((data) => {
-      //   if (data.data) {
-      //   //  console.log("New Doc: ", data);
-      //   //  console.log(data.data)
-      //     setData(data.data);
-      //     setProject({ ...project, docContent: data.data })
-      //     setEditorLoaded(true);
-      //   }
-      // });
-      // setData('fwefwfwfew');
-      // setProject({ ...project, docContent: 'jpfowjpfjw' });
       return;
     }
-
-    //setEditorLoaded(true);
   };
 
   const changeEditordata = (data) => {
