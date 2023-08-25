@@ -1,16 +1,13 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from "react";
-// import { CKEditor } from '@ckeditor/ckeditor5-react';
-// import { ClassicEditor } from '@ckeditor/ckeditor5-editor-classic';
-// import { ImportWord } from '@ckeditor/ckeditor5-import-word';
 
-export default function CKeditor({ onChange, editorLoaded, name, value }) {
+export default function CKeditor({ onChange, editorLoaded, value }) {
     const [editor, setEditor] = useState(false);
     const editorRef = useRef();
 
     useEffect(() => {
-        const DecoupledEditor = require("@ckeditor/ckeditor5-build-decoupled-document")
+        const DecoupledEditor = require("@ckeditor/ckeditor5-build-decoupled-document");
         editorRef.current = {
             DecoupledEditor,
         };
@@ -19,6 +16,7 @@ export default function CKeditor({ onChange, editorLoaded, name, value }) {
             if (typeof window !== "undefined") {
                 DecoupledEditor
                 .create( window.document.querySelector( '.document-editor__editable' ), {
+                    // plugins: [ListProperties, List ],
                     toolbar: {
                         items: [
                             'undo', 'redo',
@@ -27,6 +25,18 @@ export default function CKeditor({ onChange, editorLoaded, name, value }) {
                             '|', 'link', 'uploadImage', 'insertTable', 'mediaEmbed',
                             '|', 'bulletedList', 'numberedList', 'outdent', 'indent'
                         ]
+                    },
+                    list: {
+                        properties: {
+                          styles: true,
+                          startIndex: true,
+                          reversed: true
+                        }
+                    },
+                    cloudServices: {
+                        tokenUrl: 'https://98623.cke-cs.com/token/dev/02cb0bfac12a14cbf591786b363ff7ec79b4fe58f2a5797d91e210124fa1?limit=10',
+                        webSocketUrl: 'wss://98623.cke-cs.com/ws',
+                        uploadUrl: 'https://98623.cke-cs.com/easyimage/upload/'
                     },
                 } )
                 .then( editor => {
@@ -40,7 +50,8 @@ export default function CKeditor({ onChange, editorLoaded, name, value }) {
                       // Call your custom onChange function here
                       onChange(updatedValue);
                     });
-
+                    console.log(editor.plugins.get("list"))
+                    window.editor = editor;
                     setEditor(editor);
                 } )
                 .catch( err => {

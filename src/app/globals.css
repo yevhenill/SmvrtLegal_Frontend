@@ -196,6 +196,7 @@ Preserve the relative scale, though. */
 }
 
 @media only screen and (max-width: 960px) {
+
   /* Because on mobile 2cm paddings are to big. */
   .document-editor__editable-container .document-editor__editable.ck-editor__editable {
     padding: 1.5em;
@@ -241,7 +242,7 @@ Preserve the relative scale, though. */
   font-weight: bold;
 }
 
-.editor-container ul,
+/* .editor-container ul,
 .full-view-desc ul {
   list-style: disc;
 }
@@ -249,11 +250,24 @@ Preserve the relative scale, though. */
 .editor-container ol,
 .full-view-desc ol {
   list-style: decimal;
-}
+} */
 
 .editor-container table td,
 .full-view-desc table td {
   border-color: #000;
 }
 
-::-webkit-file-upload-button { cursor:pointer; }
+.editorstyle ol,
+.editorstyle ul,
+.editorstyle,
+menu {
+  padding-left: 25px !important;
+}
+
+.editorstyle {
+  overflow-x: hidden;
+}
+
+::-webkit-file-upload-button {
+  cursor: pointer;
+}
